@@ -1,0 +1,36 @@
+<div mat-dialog-actions  >
+    <button mat-icon-button (click)="closeModal()" aria-label="Close" class="mt-2 mr-2">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<h2 mat-dialog-title>Edit Property</h2>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Property Type</mat-label>
+    <input matInput [(ngModel)]="data.propertyType" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Price</mat-label>
+    <input matInput type="number" [(ngModel)]="data.price" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Type</mat-label>
+    <input matInput [(ngModel)]="data.type" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Category</mat-label>
+    <input matInput [(ngModel)]="data.category" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <select matNativeControl [(ngModel)]="data.status">
+      <option value="true">Active</option>
+      <option value="false">Inactive</option>
+    </select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color="primary" (click)="save()">Save</button>
+</div>
+

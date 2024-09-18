@@ -1,0 +1,5 @@
+::ng-deep .custom-modal {
+    width: 90vw !important;
+    /* max-width: none; */
+    width: 90vh !important;
+  }
