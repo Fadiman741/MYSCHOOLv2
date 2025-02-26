@@ -1,0 +1,29 @@
+<div class="modal-body"  style="padding: 20px;">
+  <h3>Edit Post</h3>
+  <div class="user-info">
+    <img
+      src="https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg"
+      alt="User"
+    />
+    <span> {{ view.currentUser.first_name }} {{ view.currentUser.last_name }} </span>
+  </div>
+  
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <textarea  [(ngModel)]="post.content"
+        rows="3"
+        placeholder="Edit your post"
+       style="width: 100%;border: 1px solid rgb(35, 164, 173);border-radius: 5px;"></textarea>
+    </div>
+
+    <div class="action-buttons">
+      <button class="menu-items">Photo / Video</button>
+      <button class="menu-items">Tag Friends</button>
+      <button class="menu-items">Feeling</button>
+    </div>
+
+    <button type="submit" class="submit-btn" style="background-color: rgb(35, 164, 173);width: 100%;border-radius: 5px;color: white;">
+      Save Changes
+    </button>
+  </form>
+</div>

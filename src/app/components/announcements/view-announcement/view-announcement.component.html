@@ -1,0 +1,103 @@
+<app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
+<section class="bg-white">
+  <section
+    class="bg-gray-200 h-[400px] bg-[#141c3c]">
+    <div class="max-w-[1250px] mx-auto">
+      <h1 class="text-4xl text-[#141c3c] font-bold leading-tight pt-6">{{ announcement.title }}</h1>
+      <div class="pt-4 flex items-center space-x-4">
+        <img [src]="announcement.image || 'https://i.pravatar.cc/100'" alt="Author" class="w-12 h-12 rounded-full">
+        <div>
+            <p class="text-md text-gray-400">Written by <span class="text-blue-400 font-semibold">{{ announcement.user.first_name }} {{ announcement.user.last_name }}</span></p>
+            <p class="text-sm text-gray-500">Published on  {{ announcement.datecreated | lastSeen }}</p>
+        </div>
+      </div>
+      <div class="mt-4 flex  space-x-4">
+        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center">
+            <span class="material-icons text-[16px] text-gray-400">favorite_border</span>
+        </button>
+        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center">
+            <span class="material-icons text-[16px] text-gray-400">chat_bubble_outline</span>
+        </button>
+        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center">
+            <span class="material-icons text-[16px] text-gray-400">share</span>
+        </button>
+        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center">
+            <!-- <span class="material-icons text-[16px] text-gray-400">linkedin</span> -->
+        </button>
+    </div>
+    </div>
+
+  </section>
+  <div>
+    <div class="max-w-[1250px] p-4 min-h-screen mx-auto p-4 bg-white rounded-lg relative -mt-[200px]">
+      <div class="">
+        <div class="flex items-center justify-between w-full bg-white rounded-lg shadow-md">
+          <!-- Profile Image -->
+          <!-- <div class="w-36 h-36 rounded-lg overflow-hidden">
+            <img
+              [src]="announcement.image || 'https://i.pravatar.cc/100'"
+              class="h-full w-full object-cover" />
+          </div> -->
+
+          <!-- User Details -->
+          <!-- <div class="mt-6 flex items-center space-x-4">
+            <img [src]="announcement.image || 'https://i.pravatar.cc/100'" alt="Author" class="w-12 h-12 rounded-full">
+            <div>
+                <p class="text-md text-gray-400">Written by <span class="text-blue-400 font-semibold">{{ announcement.user.first_name }} {{ announcement.user.last_name }}</span></p>
+                <p class="text-sm text-gray-500">Published on  {{ announcement.datecreated | lastSeen }}</p>
+            </div>
+          </div> -->
+          <!-- <div class="flex-1 ml-4 space-y-2">
+            <p class="font-semibold text-lg text-[#121a36]">
+              {{ announcement.user.first_name }} {{ announcement.user.last_name }}
+            </p>
+            <p class="text-gray-700"><strong>Years of Experience:</strong> {{ announcement.user.years_of_experience ||
+              'Not specified' }}</p>
+            <p class="text-gray-600"><strong>Role:</strong> {{ announcement.user.role || 'Not specified' }}</p>
+            <p class="text-gray-600"><strong>School:</strong> {{ announcement.user.school || 'Not specified' }}</p>
+            <p class="text-gray-600"><strong>Location:</strong> {{ announcement.user.location || 'Not specified' }}</p>
+
+          </div> -->
+
+
+
+        </div>
+        <div>
+          <div >
+            <div class="flex flex-row justify-between">
+              <p class="text-gray-500 text-sm">
+              </p>
+              <!-- Action Icons (Edit & Delete) -->
+            <div class="flex justify-end text-right ">
+              <!-- Dropdown Trigger (More Icon) -->
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon class="text-gray-600 cursor-pointer hover:text-blue-500">more_vert</mat-icon>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editItem(announcement.id)">
+                  <mat-icon class="text-blue-500">edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="onDeleteAnnouncement(announcement.id)">
+                  <mat-icon class="text-red-600">delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+            </div>
+            <!-- <h4 style="text-transform: uppercase">{{ announcement.title }}</h4> -->
+            <!-- <div [innerHTML]="announcement.description" class="max-w-full "></div> -->
+            <div class="prose lg:prose-lg prose-gray max-w-none">
+              <quill-view-html  [content]="announcement.description"></quill-view-html>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="p-12 bg-[#121a36]">
+  <app-timeline></app-timeline>
+</div>

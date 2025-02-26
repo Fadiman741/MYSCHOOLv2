@@ -1,0 +1,117 @@
+<!-- <div *ngIf="selectedThread">
+  <div class="card">
+    <div class="card-header msg_head">
+      <div class="d-flex bd-highlight">
+        <div class="img_cont">
+           <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+          <span class="online_icon"></span>
+        </div>
+        <div class="user_info">
+          <span>Chat with {{ selectedThread.otherUser }}</span>
+          <p>{{ selectedThread.messages.length }} messages</p>
+        </div>
+      </div>
+      <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+      <div class="action_menu">
+        <ul>
+          <li><i class="fas fa-user-circle"></i> View profile</li>
+          <li><i class="fas fa-users"></i> Add to close friends</li>
+          <li><i class="fas fa-plus"></i> Add to group</li>
+          <li><i class="fas fa-ban"></i> Block</li>
+        </ul>
+      </div> 
+    </div>
+
+    <div class="card-body msg_card_body">
+      <div *ngFor="let msg of selectedThread.messages"
+        [class]="msg.isUser ? 'd-flex mb-4 replied' : 'd-flex mb-4'">
+        <div class="msg_cotainer_send">
+          {{ msg.text }}
+          <span class="msg_time_send">{{ msg.timestamp | date:'d MMM' }}, {{
+            msg.timestamp | date:'HH:mm' }}</span>
+        </div>
+        <div class="img_cont_msg">
+          <img src="data:image/jpeg;base64,..."
+            class="rounded-circle user_img_msg">
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!--  -->
+<!-- <div style="background-color: #121a36;">
+  <div class="background-image"
+    style="max-width: 1218px;margin: auto;;min-height: 100dvh;;"
+    *ngIf="selectedThread">
+    <div class="header-chat"
+      style="display: flex;">
+      <i class="icon fa fa-user-o" aria-hidden="true"></i> 
+       <div class="photo"  style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+            <div class="online"></div>
+        </div>
+      <p class="name">
+        {{ selectedThread.otherUser }}
+      </p>
+      <span>{{ selectedThread.messages.length }}</span>
+     <p
+        style="padding-top:10px;padding-right: 10px;color: #aaaf;font-size: 14px;">online</p> 
+      <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+    </div>
+    <section class="chat">
+      <div class="messages-chat"  *ngFor="let msg of selectedThread.messages"
+        [class]="msg.isUser ? 'd-flex mb-4 replied' : 'd-flex mb-4'" >
+        <div class="message">
+          <div class="photo"
+            style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+            <div class="online"></div>
+          </div>
+          <p class="text"> {{ msg.text }}</p>
+        </div>
+        <p class="time"> {{ msg.timestamp | date:'d MMM' }}, {{ msg.timestamp |
+          date:'HH:mm' }}</p>
+        <div class="message text-only">
+                    <div class="response">
+                        <p class="text"> Hey Megan ! It's been a while 😃</p>
+                    </div>
+                </div>
+                <div class="message text-only">
+                    <div class="response">
+                        <p class="text"> When can we meet ?</p>
+                    </div>
+                </div>
+                <p class="response-time time"> 15h04</p>
+                <div class="message">
+                    <div class="photo" style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);">
+        <div class="online"></div>
+      </div>
+                    <p class="text"> 9 pm at the bar if possible 😳</p>
+                </div>
+                <p class="time"> 15h09</p> 
+      </div>
+      <div class="footer-chat" style=" bottom: 0px;">
+        <i class="icon fa fa-smile-o clickable" style="font: size 28px;"
+          aria-hidden="true"></i>
+        <input
+          type="text"
+          class="write-message"
+          placeholder="Type your message "
+          style="background-color: #fff;">
+        <button>Send</button>
+        <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true"
+          style="color: #eee;"></i>
+      </div>
+    </section>
+  </div> -->
+  <!-- <div *ngIf="thread">
+  <h3>Chat with {{ thread.other_user }}</h3>
+  <ul>
+    <li *ngFor="let message of thread.messages">
+      <strong>{{ message.is_user ? 'You' : thread.other_user }}:</strong>
+      {{ message.text }} ({{ message.timestamp | date:'short' }})
+    </li>
+  </ul>
+  <input [(ngModel)]="newMessageText" type="text" placeholder="Type a message..." />
+  <button (click)="sendMessage()">Send</button>
+</div>
+  <input [(ngModel)]="newMessageText" type="text" placeholder="Type a message..." />
+  <button (click)="sendMessage()">Send</button> -->

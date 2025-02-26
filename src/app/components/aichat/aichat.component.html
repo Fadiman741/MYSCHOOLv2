@@ -1,0 +1,75 @@
+<!-- <hr> -->
+<app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
+
+<section class="bg-[#121a36]">
+  <!-- Hero Section -->
+  <section class="h-[400px] bg-gray-200 bg-cover bg-center" style="background-image: url('https://api.travelfind.me/v1/images/site/c66224c5-e632-44e7-b486-5b696fa7a08d');"></section>
+
+  <!-- Chat Container -->
+  <div class="max-w-[1250px] mx-auto bg-gray-100 rounded-lg relative -mt-[200px]">
+    <div class="w-full h-[700px] rounded-lg flex flex-col">
+      <!-- Chat Header -->
+      <div class="flex justify-between items-center bg-[#121a36] py-4 px-5">
+        <p class="text-white text-lg text-center">ChatMate</p>
+      </div>
+  
+      <!-- Chat Messages -->
+      <section class="border-x border-gray-200 flex-1 overflow-y-auto">
+        <div class="messages-chat p-6">
+          <!-- Message 1 -->
+          <div class="message flex items-center mb-2">
+            <p class="text bg-gray-100 p-2 rounded-lg">Hi, how are you?</p>
+          </div>
+  
+          <!-- Message 2 -->
+          <div class="message text-only mb-2">
+            <p class="text bg-gray-100 p-2 rounded-lg">What are you doing tonight? Want to go take a drink?</p>
+          </div>
+  
+          <!-- Timestamp -->
+          <p class="time text-xs text-gray-400 mb-4">14h58</p>
+  
+          <!-- Response 1 -->
+          <div class="message text-only mb-2">
+            <div class="response ml-auto">
+              <p class="text bg-blue-100 p-2 rounded-lg">Hey Megan! It's been a while 😃</p>
+            </div>
+          </div>
+  
+          <!-- Response 2 -->
+          <div class="message text-only mb-2">
+            <div class="response ml-auto">
+              <p class="text bg-blue-100 p-2 rounded-lg">When can we meet?</p>
+            </div>
+          </div>
+  
+          <!-- Response Timestamp -->
+          <p class="response-time time text-xs text-gray-400 text-right mb-4">15h04</p>
+  
+          <!-- Message 3 -->
+          <div class="message flex items-center mb-2">
+            <p class="text bg-gray-100 p-2 rounded-lg">9 pm at the bar if possible 😳</p>
+          </div>
+  
+          <!-- Timestamp -->
+          <p class="time text-xs text-gray-400 mb-4">15h09</p>
+        </div>
+      </section>
+  
+      <!-- Chat Footer -->
+      <div class="w-full p-3 flex items-center bg-gray-200">
+        <textarea
+          type="text"
+          class="write-message flex-grow p-2 rounded-lg border-none resize-none bg-white"
+          placeholder="Type your message"
+        ></textarea>
+        <i class=" bg-[#121a36] icon send fas fa-paper-plane text-white text-xl ml-2 px-6 py-4 rounded-lg cursor-pointer"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline Section -->
+  <div class="p-12 bg-[#121a36]">
+    <app-timeline></app-timeline>
+  </div>
+</section>

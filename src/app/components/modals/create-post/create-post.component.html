@@ -1,0 +1,87 @@
+<div class="create-post bg-white rounded-lg shadow-md p-6 w-full mx-auto">
+    <!-- User Info Section -->
+    <div class="user-info flex items-center space-x-4 mb-6">
+      <img
+        class="w-12 h-12 rounded-full object-cover border-2 border-blue-500"
+        src="https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg"
+        alt="User Profile"
+      />
+      <span class="text-lg font-semibold text-gray-800">
+        {{ view.currentUser.first_name }} {{ view.currentUser.last_name }}
+      </span>
+    </div>
+  
+    <!-- Form Section -->
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="space-y-4">
+      <!-- Textarea for Post Content -->
+      <div class="text-area-container">
+        <textarea
+          rows="3"
+          placeholder="What's on your mind?"
+          [(ngModel)]="postData.content"
+          name="content"
+          required
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+        ></textarea>
+      </div>
+  
+      <!-- File Input for Image/Video -->
+      <!-- <input
+        type="file"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      /> -->
+  
+      <!-- Feeling Select Dropdown -->
+      <!-- <select
+        name="feeling"
+        [(ngModel)]="postData.feeling"
+        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      >
+        <option value="" disabled>Select Feeling</option>
+        <option value="happy">😊 Happy</option>
+        <option value="sad">😢 Sad</option>
+        <option value="excited">😃 Excited</option>
+      </select> -->
+  
+      <!-- Tag Friends Input -->
+      <!-- <input
+        type="text"
+        placeholder="Tag Friends (comma-separated)"
+        [(ngModel)]="postData.taggedFriends"
+        name="taggedFriends"
+        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      /> -->
+  
+      <!-- Action Buttons -->
+      <div class="action-buttons flex space-x-4">
+        <button
+          type="button"
+          class="flex-1 flex items-center justify-center p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200"
+        >
+          <span>Photo / Video</span>
+        </button>
+        <button
+          type="button"
+          class="flex-1 flex items-center justify-center p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200"
+        >
+          <span>Tag Friends</span>
+        </button>
+        <button
+          type="button"
+          class="flex-1 flex items-center justify-center p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200"
+        >
+          <span>Feeling</span>
+        </button>
+      </div>
+  
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200"
+      >
+        Post
+      </button>
+    </form>
+  </div>

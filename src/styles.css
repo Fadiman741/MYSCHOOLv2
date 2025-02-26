@@ -2,5 +2,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @import '~quill/dist/quill.bubble.css'; */
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+    @apply w-full max-w-4xl bg-white shadow-lg rounded-xl !important;
+}
+app-login{
+  @apply max-w-xl ;
+}
+
+.ql-editor {
+  @apply text-gray-800 font-sans leading-relaxed;
+}
+
+.ql-toolbar {
+  @apply bg-gray-100 border border-gray-300 rounded-t-md;
+}
+
+.ql-container {
+  @apply border border-gray-300 rounded-b-md;
+}
+
+.ql-editor h1 {
+  @apply text-4xl font-bold;
+}
+
+.ql-editor h2 {
+  @apply text-2xl font-semibold;
+}
+
+.ql-editor h3 {
+  @apply text-2xl font-medium;
+}
+
+.ql-editor p {
+  @apply text-gray-500 text-lg;
+}
+
+.ql-editor a {
+  @apply text-blue-500 underline;
+}

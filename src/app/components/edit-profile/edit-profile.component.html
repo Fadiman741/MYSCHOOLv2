@@ -1,0 +1,106 @@
+<!-- <app-pagetitle
+  title="Update Profile"
+  [breadcrumbItems]="breadCrumbItems"
+></app-pagetitle> -->
+<div style="padding: 20px">
+  <form (ngSubmit)="updateCurrentUser()" #updateForm="">
+    <label for="first_name">First Name:</label><br />
+    <input
+      type="text"
+      id="first_name"
+      name="first_name"
+      [(ngModel)]="user.first_name"
+    /><br />
+
+    <label for="last_name">Last Name:</label><br />
+    <input
+      type="text"
+      id="last_name"
+      name="last_name"
+      [(ngModel)]="user.last_name"
+    /><br />
+
+    <label for="bio">Bio:</label><br />
+    <textarea id="bio" name="bio" [(ngModel)]="user.bio"></textarea><br />
+
+    <label for="email">Email:</label><br />
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="user.email"
+    /><br />
+
+    <label for="phone">Phone:</label><br />
+    <input type="tel" id="phone" name="phone" [(ngModel)]="user.phone" /><br />
+
+    <label for="location">Location:</label><br />
+    <input
+      type="text"
+      id="location"
+      name="location"
+      [(ngModel)]="user.location"
+    /><br />
+
+    <label for="subjects">Subjects:</label><br />
+    <input
+      type="text"
+      id="subjects"
+      name="subjects"
+      [(ngModel)]="user.subjects"
+    /><br />
+
+    <label for="years_experience">Years of Experience:</label><br />
+    <input
+      type="number"
+      id="years_experience"
+      name="years_experience"
+      [(ngModel)]="user.years_experience"
+    /><br />
+
+    <label for="role">Role:</label><br />
+    <input type="text" id="role" name="role" [(ngModel)]="user.role" /><br />
+
+    <label for="school">School:</label><br />
+    <input
+      type="text"
+      id="school"
+      name="school"
+      [(ngModel)]="user.school"
+    /><br />
+
+    <label for="languages">Languages:</label><br />
+    <input
+      type="text"
+      id="languages"
+      name="languages"
+      [(ngModel)]="user.languages"
+    /><br />
+
+    <label for="facebook">Facebook:</label><br />
+    <input
+      type="text"
+      id="facebook"
+      name="facebook"
+      [(ngModel)]="user.facebook"
+    /><br />
+
+    <label for="twitter">Twitter:</label><br />
+    <input
+      type="text"
+      id="twitter"
+      name="twitter"
+      [(ngModel)]="user.twitter"
+    /><br />
+
+    <label for="linkedin">LinkedIn:</label><br />
+    <input
+      type="text"
+      id="linkedin"
+      name="linkedin"
+      [(ngModel)]="user.linkedin"
+    /><br />
+
+    <input type="submit" value="Submit" />
+  </form>
+</div>

@@ -1,0 +1,219 @@
+<app-pagetiltle title="HOME" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
+<!-- <app-pagetitle title="HOME" [breadcrumbItems]="breadCrumbItems"></app-pagetitle> -->
+
+<div class="bg-cover bg-center" [ngStyle]="backgroundStyle">
+  <div class="intro-content py-[140px]">
+    <div class="about-line px-5 max-w-[1400px] mx-auto">
+      <h1 class="text-gray-100 font-extrabold font-cursive text-[90px]">Education</h1>
+      <h1 class="text-gray-100 pl-[100px] text-[70px] font-cursive">Makes a</h1>
+      <h1 class="text-gray-100 pl-[180px] font-semibold text-[40px] font-cursive">
+        Better <u class="text-[#82cd61]">world</u>.
+      </h1>
+      <p class="max-w-[600px] font-normal text-gray-300 mt-6">
+        Our goal is to make learning accessible and engaging for everyone,
+        whether you are a student looking to improve your academic skills or an
+        adult seeking to enhance your knowledge and career prospects.
+      </p>
+      <button class="border-none rounded-md mt-6 p-2 w-[150px] uppercase text-[14px] bg-[#82cd61] text-gray-200">
+        Get Started
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="bg-[#121a36] p-[30px]">
+  <div class="p-[15px] rounded-md uppercase">
+    <h4 class="text-center text-[#c4c4c4]">Recent Announcements...</h4>
+  </div>
+  <hr class="border border-gray-500" />
+  <br />
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-6">
+    <ng-template *ngFor="let item of announcements">
+      <div class="m-[10px] bg-white p-[10px] border border-gray-200">
+        <div class="flex justify-between">
+          <h4 (click)="navigateToViewAnnouncement(item.id)" class="uppercase cursor-pointer">
+            {{ item.title }}
+          </h4>
+        </div>
+        <p class="uppercase">
+          {{ item.user.first_name }} {{ item.user.last_name }} |
+          <span class="text-gray-500 lowercase">{{ item.datecreated | lastSeen }}</span>
+        </p>
+        <p class="font-normal">{{ item.description }}</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <br />
+  <hr class="border border-gray-500" />
+</div>
+<section class="bg-gray-100">
+  <div class=" p-5 max-w-[1200px] mx-auto">
+    <h2 class="text-center text-3xl border-b-2 border-[#121a36] uppercase font-bold p-5">
+      About Us
+    </h2>
+    <div class="flex justify-between gap-8">
+      <div class="w-1/2 p-8">
+        <img src="assets/about/1.png" class="w-full" />
+      </div>
+      <div class="w-1/2 p-16">
+        <h3 class="pt-5 uppercase text-2xl text-[#121a36]">OUR GOAL</h3>
+        <p class="p-5 max-w-[450px] font-lg leading-[1.4] border-l-2 border-[#121a36] text-[#121a36]">
+          Our goal is to make learning accessible and engaging for everyone,
+          whether you are a student looking to improve your academic skills or an
+          adult seeking to enhance your knowledge and career prospects.
+        </p>
+        <h3 class="text-[#121a36] uppercase  text-2xl">WE STRIVE TO SEE STUDENTS DOING GREAT WHILE ENGAGING EACH OTHER.
+        </h3>
+        <p class="p-5 max-w-[450px] font-lg leading-[1.4] border-l-2 border-[#121a36] text-[#121a36]">
+          Our aim is to equip students with the knowledge and skills they need to
+          succeed in today's fast-paced world, ensuring that students acquire a
+          deep understanding of the subject they are pursuing.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-10">
+      <div
+        class="w-[300px] bg-[#121a36] h-[150px] rounded-lg border border-gray-200 m-2 flex flex-col items-center justify-center">
+        <h1 class="text-white font-extrabold text-4xl">{{ members?.length }}+</h1>
+        <p class="text-gray-400 font-normal">Members</p>
+      </div>
+      <div
+        class="w-[300px] bg-[#121a36] h-[150px] rounded-lg border border-gray-200 m-2 flex flex-col items-center justify-center">
+        <h1 class="text-white font-extrabold text-4xl">{{ tutors?.length }}+</h1>
+        <p class="text-gray-400 font-normal">Tutors Available</p>
+      </div>
+      <div
+        class="w-[300px] bg-[#121a36] h-[150px] rounded-lg border border-gray-200 m-2 flex flex-col items-center justify-center">
+        <h1 class="text-white font-extrabold text-4xl">{{ institutions?.length }}+</h1>
+        <p class="text-gray-400 font-normal">Institutions</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="relative py-20 bg-[#121a36]">
+  <!-- <div
+    class="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
+    style="transform: translateZ(0)"
+  >
+    <svg
+      class="absolute bottom-0 overflow-hidden"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+      version="1.1"
+      viewBox="0 0 2560 100"
+      x="0"
+      y="0"
+    >
+      <polygon
+        class="text-white fill-current"
+        points="2560 0 2560 100 0 100"
+      ></polygon>
+    </svg>
+  </div> -->
+
+  <div class="container mx-auto px-4 ">
+    <div class="items-center flex flex-wrap">
+      <div class="w-full md:w-4/12 ml-auto mr-auto px-4">
+        <img alt="..." class="max-w-full rounded-lg shadow-lg"
+          src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
+      </div>
+      <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
+        <div class="md:pr-12">
+          <div
+            class="text-red-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-red-300">
+            <i class="fas fa-rocket text-xl"></i>
+          </div>
+          <h3 class="text-3xl font-semibold text-gray-300">A growing company</h3>
+          <p class="mt-4 text-lg leading-relaxed text-gray-400 font-normal">
+            The extension comes with three pre-built pages to help you get
+            started faster. You can change the text and images and you're good
+            to go.
+          </p>
+          <ul class="list-none mt-6">
+            <li class="py-2">
+              <div class="flex items-center">
+                <div>
+                  <span
+                    class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 mr-3">
+                    <i class="fas fa-fingerprint"></i>
+                  </span>
+                </div>
+                <div>
+                  <h4 class="text-gray-400 font-normal">
+                    Carefully crafted components
+                  </h4>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="flex items-center">
+                <div>
+                  <span
+                    class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 mr-3">
+                    <i class="fab fa-html5"></i>
+                  </span>
+                </div>
+                <div>
+                  <h4 class="text-gray-400 font-normal">Amazing page examples</h4>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="flex items-center">
+                <div>
+                  <span
+                    class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 mr-3">
+                    <i class="far fa-paper-plane"></i>
+                  </span>
+                </div>
+                <div>
+                  <h4 class="text-gray-400 font-normal">Dynamic components</h4>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-gray-100 min-h-[600px] py-16 px-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-6">
+    <div *ngFor="let user of members;let i = index"
+      class="profile-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+      <img src="https://i.pravatar.cc/{{i+3}}" alt="Tutor" class="w-full h-72 object-cover object-center">
+      <div class="p-6 space-y-2">
+        <h2 class="text-2xl font-bold text-[#141c3cc2] uppercase">{{ user.first_name }} {{ user.last_name }}</h2>
+        <p class="text-gray-500 mt-2">Experience: 5 years</p>
+        <p class="text-gray-500">Subjects: Math, Science</p>
+        <p class="text-gray-500">Location: New York, NY</p>
+        <p class="text-gray-500">Languages: English, Spanish</p>
+        <div class="flex justify-between items-center mt-8">
+          <div class="flex space-x-4">
+            <a href="#"><img src="assets/social_icons/facebook.png" alt="Facebook" class="w-6 hover:opacity-75"></a>
+            <a href="#"><img src="assets/social_icons/twitter.png" alt="Twitter" class="w-6 hover:opacity-75"></a>
+            <a href="#"><img src="assets/social_icons/linkedin.png" alt="LinkedIn" class="w-6 hover:opacity-75"></a>
+          </div>
+          <div
+            class="text-xl text-[#23A4AD] bg-[#121a36] rounded-md p-2 w-8 h-8 hover:bg-[#23A4AD] hover:text-white transition-colors duration-300">
+            <mat-icon class="text-sm text-[#23A4AD]">
+              send
+            </mat-icon>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</section>
+<div class="timelines bg-[#121a36]" style="padding: 40px">
+  <app-timeline></app-timeline>
+</div>
+<!-- <app-footer></app-footer> -->

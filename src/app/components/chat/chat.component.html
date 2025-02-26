@@ -1,0 +1,116 @@
+<!-- <app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle> -->
+
+
+<!-- <div class="card mb-sm-3 mb-md-0 contacts_card">
+  <div class="card-header">
+    <div class="input-group">
+      <input type="text" placeholder="Search..." class="form-control search">
+      <div class="input-group-prepend">
+        <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body contacts_body">
+    <ul class="contacts">
+      <li *ngFor="let thread of threads" (click)="selectThread(thread)" [class.active]="thread === selectedThread">
+        <div class="d-flex bd-highlight">
+          <div class="img_cont">
+            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img"> 
+            <span class="online_icon"></span>
+          </div>
+          <div class="user_info">
+            <span>{{ thread.otherUser }}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div> -->
+<!-- <div style="background-color: #121a36;">
+    <div class="container" style="max-width: 1218px;min-height:85vh;margin: auto; ;">
+        <div class="inbox">
+            <section class="discussions">
+                <div class="discussion search" style="height: 55px;">
+          <div class="searchbar">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search..."/>
+          </div>
+        </div>
+                <div *ngFor="let thread of threads" (click)="selectThread(thread)" [class.active]="thread === selectedThread">
+                    <div class="discussion message-active">
+                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg)">
+                            <div class="online"></div>
+                        </div>
+                        <div class="desc-contact">
+                            <p class="name">
+                                <b>{{ thread.otherUser }}</b>
+                            </p>
+                            <p class="message">9 pm at the bar if possible 😳</p>
+                        </div>
+                        <div class="timer">12 sec</div>
+                    </div>
+                  </div>
+
+             <a routerLink="/chat">
+                    <div class="discussion">
+                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg);"></div>
+                        <div class="desc-contact">
+                            <p class="name">
+                                <b>Lorem Ipsum</b>
+                            </p>
+                            <p class="message">I've sent you the annual report</p>
+                        </div>
+                        <div class="timer">42 min</div>
+                    </div>
+                </a>
+                <a routerLink="/chat">
+                    <div class="discussion">
+                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg);">
+                            <div class="online"></div>
+                        </div>
+                        <div class="desc-contact">
+                            <p class="name">
+                                <b>Lorem Ipsum</b>
+                            </p>
+                            <p class="message">See you tomorrow ! 🙂</p>
+                        </div>
+                        <div class="timer">2 hour</div>
+                    </div>
+                </a>
+                <a routerLink="/chat">
+                    <div class="discussion">
+                        <a></a>
+                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg);"></div>
+                        <div class="desc-contact">
+                            <p class="name">
+                                <b>Lorem Ipsum</b>
+                            </p>
+                            <p class="message">Ahahah 😂</p>
+                        </div>
+                        <div class="timer">4 days</div>
+                    </div>
+                </a> 
+            </section>
+        </div>
+    </div>
+</div>  -->
+<!-- <div *ngIf="thread">
+  <h3>Chat with {{ thread.other_user }}</h3>
+  <ul>
+    <li *ngFor="let message of thread.messages">
+      <strong>{{ message.is_user ? 'You' : thread.other_user }}:</strong>
+      {{ message.text }} ({{ message.timestamp | date:'short' }})
+    </li>
+  </ul>
+  <input [(ngModel)]="newMessageText" type="text" placeholder="Type a message..." />
+  <button (click)="sendMessage()">Send</button>
+</div> -->
+<div>
+  <h2>Threads</h2>
+  <ul>
+    <li *ngFor="let thread of threads">
+      <a [routerLink]="['/threads', thread.id]">{{ thread.other_user }}</a>
+    </li>
+  </ul>
+</div>
+

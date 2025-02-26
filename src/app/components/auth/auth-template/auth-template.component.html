@@ -1,0 +1,30 @@
+<!-- <app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle> -->
+
+<div class="max-w-[1250px] mx-auto">
+  <div class="h-[700px] flex flex-col md:flex-row">
+    <!-- Left Section -->
+    <div class="w-full md:w-1/2 bg-cover bg-center rounded-tl-lg rounded-bl-lg" 
+         style="background-image: linear-gradient(45deg, rgba(196, 23, 23, 0.75), rgba(40, 126, 179, 0.75)), url('https://media.istockphoto.com/id/1000887536/photo/back-view-of-elementary-students-raising-their-arms-on-a-class.jpg?s=612x612&w=0&k=20&c=i0PBNmY4nSgOhHyy9AU5OAiJrOsHk7f7jLcNkO6CApE=');">
+    </div>
+
+    <!-- Right Section -->
+    <div class="w-full md:w-1/2 bg-gray-100 rounded-tr-lg rounded-br-lg p-5">
+      <div class="max-w-[500px] mx-auto">
+        <!-- Temporary Content -->
+        <div class="mx-5 mt-5">
+          <!-- Buttons (commented out) -->
+          <!-- <button class="w-1/2 border-r border-gray-300 py-1 text-gray-700 hover:bg-[#23a4ad] hover:border hover:border-gray-100">
+            <a [routerLink]="['./signup']">Sign Up</a>
+          </button>
+          <button class="w-1/2 py-1 text-gray-700 hover:bg-[#23a4ad] hover:border hover:border-gray-100">
+            <a [routerLink]="['./signin']">Sign In</a>
+          </button> -->
+        </div>
+      </div>
+
+      <!-- Router Outlet -->
+      <router-outlet></router-outlet>
+      <!-- <app-login></app-login> -->
+    </div>
+  </div>
+</div>

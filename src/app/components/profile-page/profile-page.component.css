@@ -1,0 +1,109 @@
+/* .profile {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      .profile-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      
+      .profile-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      
+      .contact-info,
+      .location,
+      .subjects {
+        border: 1px solid rgb(35, 164, 173);
+        padding: 10px;
+        border-radius: 5px;
+      }
+      p{
+        color: #6e6b6b;
+      } */
+      /* =================================================== */
+            .profile {
+              margin: 20px;
+              padding: 20px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              background-color: #f9f9f9;
+            }
+      
+            .profile-header {
+              margin-bottom: 20px;
+            }
+      
+            .profile-header h1 {
+              font-size: 24px;
+            }
+      
+            .profile-header p {
+              margin-top: 5px;
+              color: #666;
+            }
+      
+            .profile-details {
+              display: flex;
+            }
+      
+            .profile-card {
+              display: flex;
+            }
+      
+            .profile-card .profile_picture {
+              max-width: 400px;
+              height: auto;
+              margin-right: 20px;
+              border-radius: 5px;
+            }
+            .profile-card img {
+              max-width: 30px;
+              height: auto;
+              margin-right: 20px;
+              border-radius: 5px;
+            }
+            .profile-info {
+              flex: 1;
+              
+            }
+      
+            .profile-info h2 {
+              font-size: 20px;
+            }
+      
+            .profile-info p {
+              margin-top: 5px;
+              color: #666;
+            }
+      
+            .social-icons a {
+              display: inline-block;
+              margin: 5px;
+              text-decoration: none;
+              color: #666;
+              text-transform: lowercase;
+            }
+      
+            .additional-info {
+              margin-left: 20px;
+            }
+      
+            .contact-info h2,
+            .location h2,
+            .subjects h2 {
+              font-size: 18px;
+            }
+      
+            .send-icon {
+              margin-top: 10px;
+            }
+      
+            .send-icon i {
+              font-size: 22px;
+              color: rgb(35, 164, 173);
+            }

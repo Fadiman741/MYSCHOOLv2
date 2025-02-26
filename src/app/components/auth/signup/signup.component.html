@@ -1,0 +1,67 @@
+<div class="mx-auto w-full max-w-[500px]">
+  <div class="p-5 rounded-lg">
+    <form (ngSubmit)="onRegisterSubmit(registerForm)" #registerForm="ngForm" class="space-y-4">
+      <!-- Username Field -->
+      <label for="username" class="block font-medium text-gray-700">Username:</label>
+      <input type="text" placeholder="Username" id="username" name="username" [(ngModel)]="user.username" required
+             class="w-full p-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- First Name Field -->
+      <label for="firstName" class="block font-medium text-gray-700">First Name:</label>
+      <input type="text" placeholder="First Name" id="firstName" name="firstName" [(ngModel)]="user.firstName" required
+             class="w-full p-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- Last Name Field -->
+      <label for="lastName" class="block font-medium text-gray-700">Last Name:</label>
+      <input type="text" placeholder="Last Name" id="lastName" name="lastName" [(ngModel)]="user.lastName" required
+             class="w-full p-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- Email Field -->
+      <label for="email" class="block font-medium text-gray-700">Email:</label>
+      <input type="email" placeholder="Email" id="email" name="email" [(ngModel)]="user.email" required
+             class="w-full p-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- Register As Field -->
+      <label for="member" class="block font-medium text-gray-700">Register as:</label>
+      <select id="member" name="member" [(ngModel)]="user.member" required
+              class="w-full p-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="Teacher">Teacher</option>
+        <option value="Tutor">Tutor</option>
+        <option value="Student">Student</option>
+        <option value="Institution">Institution</option>
+      </select>
+
+      <!-- Password Field -->
+      <label for="password" class="block font-medium text-gray-700">Password:</label>
+      <input type="password" placeholder="Password" id="password" name="password" [(ngModel)]="user.password" required
+             class="w-full p-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit" class="w-full p-2.5 bg-teal-700 text-white rounded-md hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
+          Sign Up
+        </button>
+      </div>
+    </form>
+
+    <!-- Social Media Signup Options -->
+    <div class="mt-6 text-center">
+      <p class="text-gray-600">Or sign up with:</p>
+      <div class="flex justify-center space-x-4 mt-2">
+        <a href="#" class="social-icon">
+          <img src="assets/social_icons/facebook.png" alt="Facebook" class="w-10 h-10 rounded-full bg-white p-1.5 shadow-sm">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="assets/social_icons/twitter.png" alt="Twitter" class="w-10 h-10 rounded-full bg-white p-1.5 shadow-sm">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="assets/social_icons/google.png" alt="Google" class="w-10 h-10 rounded-full bg-white p-1.5 shadow-sm">
+        </a>
+      </div>
+    </div>
+
+    <!-- <div class="mt-4 text-center text-gray-600">
+      Already have an account? <a [routerLink]="['/auth/signin']" class="text-blue-600 hover:underline">Sign In</a> here.
+    </div> -->
+  </div>
+</div>

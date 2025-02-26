@@ -1,0 +1,156 @@
+<section class="overflow-y-auto">
+  
+<h2 mat-dialog-title class="text-gray-800 px-4 pt-4">Create a New Announcement</h2>
+
+<div mat-dialog-content class="p-4">
+  <form (ngSubmit)="onSubmit(postForm)" #postForm="ngForm" class="flex flex-col space-y-4">
+    <!-- Post Content -->
+    <!-- <label>Tags (Separate with commas)</label>
+    <input  type="text" [(ngModel)]="post.title"  placeholder="Type a title"  class="border p-2 w-full"
+    />  -->
+    <div class="flex flex-col space-y-2">
+      <!-- <label class="text-sm font-medium text-gray-700">What's on your mind?</label>
+      <textarea
+        matInput
+        placeholder="Write something..."
+        [(ngModel)]="post.content"
+        name="content"
+        required
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+        rows="4"
+      ></textarea> -->
+      <quill-editor [style]="{ height:'400px' }" [(ngModel)]="announcement.description" name="description" [modules]="modules"></quill-editor>
+      <!-- <ngx-quill #editor  ></ngx-quill> -->
+
+    </div>
+    <!-- <label>Tags (Separate with commas)</label>
+    <input
+      type="text"
+      [(ngModel)]="tagInput"
+      (keyup.enter)="addTag()"
+      placeholder="Type a tag and press Enter"
+      class="border p-2 w-full"
+    /> -->
+    <!-- Display Added Tags -->
+  <!-- <div class="flex flex-wrap mt-2">
+    <span
+      *ngFor="let tag of post.tags; let i = index"
+      class="bg-teal-500 text-white px-3 py-1 rounded-full mr-2 mb-2 cursor-pointer"
+      (click)="removeTag(i)"
+    >
+      {{ tag }} ✕
+    </span>
+  </div> -->
+    <!-- Image Upload -->
+    <!-- <div class="flex flex-col space-y-2">
+      <label class="text-sm font-medium text-gray-700">Upload Image</label>
+      <input
+        type="file"
+        (change)="onFileSelected($event, 'image')"
+        accept="image/*"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+      />
+      <div *ngIf="post.imagePreview" class="mt-2">
+        <img [src]="post.imagePreview" alt="Preview" class="w-full h-40 object-cover rounded-md" />
+      </div>
+    </div> -->
+
+    <!-- Video Upload -->
+    <!-- <div class="flex flex-col space-y-2">
+      <label class="text-sm font-medium text-gray-700">Upload Video</label>
+      <input
+        type="file"
+        (change)="onFileSelected($event, 'video')"
+        accept="video/*"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+      />
+      <div *ngIf="post.videoPreview" class="mt-2">
+        <video [src]="post.videoPreview" controls class="w-full h-40 rounded-md"></video>
+      </div>
+    </div> -->
+
+    <!-- Tag Friends -->
+    <!-- <div class="flex flex-col space-y-2">
+      <label class="text-sm font-medium text-gray-700">Tag Friends</label>
+    
+      <mat-form-field class="w-full">
+        <mat-label>Search & Tag Friends</mat-label>
+        <mat-select [(ngModel)]="post.taggedFriends" name="taggedFriends" multiple>
+          Search Input Inside mat-select
+          <mat-option class="p-2">
+            <input
+              type="text"
+              [(ngModel)]="searchQuery"
+              (input)="onFriendsFilterChange($event)"
+              placeholder="Search friends..."
+              class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+            />
+          </mat-option>
+      
+          Filtered Friend List
+          <mat-option *ngFor="let friend of filteredFriends" [value]="friend.id">
+            <div class="flex items-center">
+              <img
+                [src]="friend.profilePicture || 'https://i.pravatar.cc/100'"
+                alt="{{ friend.name }}"
+                class="w-8 h-8 rounded-full mr-2"
+              />
+              <span>{{ friend.name }}</span>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+    
+    <!-- <div class="flex flex-col space-y-2">
+      <label class="text-sm font-medium text-gray-700">Tag Friends</label>
+      <mat-select
+        [(ngModel)]="post.taggedFriends"
+        name="taggedFriends"
+        multiple
+        class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+      >
+        <mat-option *ngFor="let friend of friends" [value]="friend.id">{{ friend.name }}</mat-option>
+      </mat-select>
+    </div> -->
+
+    <!-- Feeling -->
+    <!-- <div class="flex flex-col space-y-2">
+      <label class="text-sm font-medium text-gray-700">How are you feeling?</label>
+      <select
+        [(ngModel)]="post.feeling"
+        name="feeling"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+      >
+        <option value="">Select a feeling</option>
+        <option value="happy">😊 Happy</option>
+        <option value="sad">😢 Sad</option>
+        <option value="excited">😃 Excited</option>
+        <option value="angry">😠 Angry</option>
+      </select>
+    </div> -->
+    <div mat-dialog-actions class="flex justify-end space-x-2 p-4 mt-8">
+      <button
+        mat-button
+        (click)="onCancel()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+      >
+        Cancel
+      </button>
+      <button
+        mat-button
+        type="submit"
+        [disabled]="postForm.invalid"
+        cdkFocusInitial
+        class="px-4 py-2 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-teal-300 disabled:cursor-not-allowed"
+      >
+        Post
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Dialog Actions -->
+
+
+</section>

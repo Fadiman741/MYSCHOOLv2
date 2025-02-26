@@ -1,0 +1,30 @@
+<section class="overflow-y-auto">
+  <h2 mat-dialog-title class="text-gray-800 px-4 pt-4">Edit Announcement</h2>
+
+  <div mat-dialog-content class="p-4">
+    <form (ngSubmit)="onSubmit(editForm)" #editForm="ngForm" class="flex flex-col space-y-4">
+      <div class="flex flex-col space-y-2">
+        <quill-editor [style]="{ height:'400px' }" [(ngModel)]="announcement.description" name="description" [modules]="modules"></quill-editor>
+      </div>
+      
+      <div mat-dialog-actions class="flex justify-end space-x-2 p-4 mt-8">
+        <button
+          mat-button
+          (click)="onCancel()"
+          class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        >
+          Cancel
+        </button>
+        <button
+          mat-button
+          type="submit"
+          [disabled]="editForm.invalid"
+          cdkFocusInitial
+          class="px-4 py-2 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-teal-300 disabled:cursor-not-allowed"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
