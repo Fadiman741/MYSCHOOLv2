@@ -76,6 +76,7 @@ export class NavbarComponent implements OnInit {
   }
   logout(){
     localStorage.removeItem('loggedInUser')
+    localStorage.removeItem('token')
     this.router.navigate(['/']).then(()=>{
       window.location.reload()
     })
@@ -115,7 +116,9 @@ export class NavbarComponent implements OnInit {
     }
     openSignupModal(): void {
       const dialogRef = this.dialog.open(SignupComponent, {
-        width: '400px',
+        width: 'max-w-2xl', // Optional: Set initial width
+         // Optional: Set initial height
+        panelClass: 'custom-dialog', // Optional: Add a custom class
         data: { }  // Pass the current announcement to the modal
       });
     }

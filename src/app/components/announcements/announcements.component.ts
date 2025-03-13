@@ -130,4 +130,15 @@ export class AnnouncementsComponent implements OnInit {
       data: { announcement }  // Pass the current announcement to the modal
     });
   }
+  likePost(post: any) {
+    this.apiservice.likeAnnouncement(post.id).subscribe(response => {
+      if (response.status === "liked") {
+        post.like_count += 1;
+        post.user_has_liked = true;
+      } else {
+        post.like_count -= 1;
+        post.user_has_liked = false;
+      }
+    });
+  }
 }

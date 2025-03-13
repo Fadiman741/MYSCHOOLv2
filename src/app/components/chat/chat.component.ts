@@ -1,37 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { ChatService } from 'src/app/services/chat.service';
-
-// @Component({
-//   selector: 'app-chat',
-//   templateUrl: './chat.component.html',
-//   styleUrls: ['./chat.component.css']
-// })
-// export class ChatComponent implements OnInit {
-
-//   breadCrumbItems: Array<{}> = [];
-//   isReadMore: true = true;
-
-//     threads : any;
-//   selectedThread: any;
-
-//   constructor(private chatService: ChatService) { }
-
-//   ngOnInit() {
-//     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Inbox', active: true }];
-
-//     this.chatService.getThreads().subscribe(threads => {
-//       this.threads = threads;
-//     });
-//     this.chatService.getSelectedThread().subscribe(thread => {
-//       this.selectedThread = thread;
-//     });
-//   }
-
-//   selectThread(thread:any) {
-//     this.chatService.selectThread(thread);
-//   }
-
-// }
 
 
 import { Component, OnInit } from '@angular/core';
@@ -39,38 +5,63 @@ import { ChatService } from '../../services/chat.service';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
 
-interface Message {
-  text: string;
-  timestamp: Date;
-  is_user: boolean;
-}
-
-interface Thread {
-  id: number;
-  other_user: string;
-  messages: Message[];
-}
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  imports: [RouterLink,NgFor],
+  imports: [RouterLink,NgFor,FormsModule],
   standalone:true,
 })
 export class ChatComponent implements OnInit {
-  threads: Thread[] = [];
+  messages = [];
+  recentChats = [
+    { id: 1, name: 'John Doe', lastMessage: 'Hey, how are you?', timestamp: '10:00 AM' },
+    { id: 2, name: 'Jane Smith', lastMessage: 'See you later!', timestamp: '9:30 AM' },
+    { id: 3, name: 'Alice Johnson', lastMessage: 'Thanks for the help!', timestamp: 'Yesterday' }
+  ]
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ApiService) { }
 
-  ngOnInit(): void {
-    this.getThreads();
+  ngOnInit(): void {  
   }
 
-  getThreads(): void {
-    this.chatService.getThreads().subscribe((threads) => {
-      this.threads = threads;
-    });
+  filteredChats = [...this.recentChats]; // Copy of recentChats for filtering
+  searchQuery = '';
+
+  // Function to delete a chat
+  deleteChat(chatId: number) {
+    this.recentChats = this.recentChats.filter(chat => chat.id !== chatId);
+    this.filteredChats = this.recentChats; // Update filtered list
   }
+
+  // Function to search chats
+  searchChats() {
+    this.filteredChats = this.recentChats.filter(chat =>
+      chat.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      chat.lastMessage.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+
+  // Function to clear search
+  clearSearch() {
+    this.searchQuery = '';
+    this.filteredChats = this.recentChats;
+  }
+  loadMessages(): void {
+    this.chatService.getMessages().subscribe(
+      (data) => this.messages = data,
+      (error) => console.error('Error fetching messages', error)
+    );
+  }
+
+  // deleteMessage(id: number): void {
+  //   this.chatService.deleteMessage(id).subscribe(
+  //     () => this.messages = this.messages.filter(msg => msg.id !== id),
+  //     (error) => console.error('Error deleting message', error)
+  //   );
+  // }
 }

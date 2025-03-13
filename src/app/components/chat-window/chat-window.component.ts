@@ -1,30 +1,10 @@
 
-
-
-// import { Component, OnInit } from '@angular/core';
-// import { ChatService } from '../../services/chat.service';
-
-// @Component({
-//   selector: 'app-chat-window',
-//   templateUrl: './chat-window.component.html',
-//   styleUrls: ['./chat-window.component.css']
-// })
-// export class ChatWindowComponent implements OnInit {
-//   selectedThread: any;
-
-//   constructor(private chatService: ChatService) { }
-
-//   ngOnInit() {
-//     this.chatService.getSelectedThread().subscribe(thread => {
-//       this.selectedThread = thread;
-//     });
-//   }
-// }
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../../services/chat.service';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { NgClass, NgFor } from '@angular/common';
 
 interface Message {
   text: string;
@@ -42,12 +22,20 @@ interface Thread {
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css'],
-  imports: [FormsModule],
+  imports: [FormsModule,NgClass,NgFor],
   standalone:true,
 })
 export class ChatWindowComponent implements OnInit {
   thread: Thread | undefined;
   newMessageText: string = '';
+  messages = [
+    { sender: 'John Doe', text: 'Hey, how are you?', timestamp: '10:00 AM' },
+    { sender: 'You', text: 'I am good, thanks!', timestamp: '10:01 AM' },
+    { sender: 'John Doe', text: 'Great to hear!', timestamp: '10:02 AM' }
+  ];
+  newMessage = '';
+
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -55,27 +43,13 @@ export class ChatWindowComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getThread();
   }
 
-  getThread(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.chatService.getThread(id).subscribe((thread) => {
-      this.thread = thread;
-    });
-  }
-
-  sendMessage(): void {
-    if (this.thread && this.newMessageText) {
-      const message = {
-        text: this.newMessageText,
-        timestamp: new Date(),
-        is_user: true
-      };
-      this.chatService.sendMessage(this.thread.id, message).subscribe((msg) => {
-        this.thread?.messages.push(msg);
-        this.newMessageText = '';
-      });
+  
+  sendMessage() {
+    if (this.newMessage.trim()) {
+      this.messages.push({ sender: 'You', text: this.newMessage, timestamp: new Date().toLocaleTimeString() });
+      this.newMessage = '';
     }
   }
 }

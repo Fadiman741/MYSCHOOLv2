@@ -38,9 +38,9 @@ private messageType: string | null = null;
           this.message = null;
           this.messageType = null;
      }
-     getMessage() {
-          return this.message;
-     }
+     // getMessage() {
+     //      return this.message;
+     // }
      getMessageType() {
           return this.messageType;
      }
@@ -48,7 +48,7 @@ private messageType: string | null = null;
 
      headers = this.authToken? new HttpHeaders({
                     'Content-Type': 'application/json',
-                    'Authorization': `Token ${this.getAuthToken()}`
+                    'Authorization': `token ${this.getAuthToken()}`
                })
                : new HttpHeaders({
                     'Content-Type': 'application/json'
@@ -59,11 +59,13 @@ private messageType: string | null = null;
      // });
      getHeaders(): HttpHeaders {
           const token = this.getAuthToken();
+          console.log(',,,,,,,,,,,,,',token)
           return new HttpHeaders({
               'Content-Type': 'application/json',
               ...(token ? { 'Authorization': `Token ${token}` } : {})
           });
       }
+
 
 
      getAuthToken(): string | null {
@@ -118,11 +120,21 @@ private messageType: string | null = null;
           const headers = this.getHeaders();
           return this.http.post(this.baseUrls +'/create_announcement/',announcement,{ headers });
      }
+     uploadImage(file: File): Observable<{ image_url: string }> {
+          const headers = this.getHeaders();
+          const formData = new FormData();
+          formData.append('image', file);
+          return this.http.post<{ image_url: string }>(this.baseUrls +'/upload/',formData,{ headers });
+        }
      getAllAnnouncements() : Observable<any>{
           return this.http.get(this.baseUrls + '/announcements/')
      }
      getAnnouncement(announcementId: any) : Observable<any>{
           return this.http.get(`${this.baseUrls}/announcement/${announcementId}/`,{ headers: this.headers });
+     }
+     likeAnnouncement(announcementId: string) {
+          const headers = this.getHeaders();
+          return this.http.post<{status: string}>(`/api/announcements/${announcementId}/like/`, {headers});
      }
      deleteAnnouncement(announcementId: number) : Observable<any>{
           return this.http.delete(`${this.baseUrls}/announcement/${announcementId}/`,{ headers: this.headers });
@@ -133,6 +145,7 @@ private messageType: string | null = null;
      updateAnnouncement(announcementId: number, updatedData: any): Observable<any> {
           return this.http.put(`${this.baseUrls}/announcement/${announcementId}/`, updatedData, { headers: this.headers });
         }
+     
      // ===================================================================================================
 
 
@@ -156,7 +169,8 @@ private messageType: string | null = null;
      // }
      createPost(gradeId: number, subjectId: number, postData: any): Observable<any> {
           const headers = this.getHeaders();
-          return this.http.post(`${this.baseUrls}/grades/${gradeId}/subjects/${subjectId}/`, postData,{ headers});
+          console.log('.....Headers.....',headers )
+          return this.http.post(`${this.baseUrls}/grades/${gradeId}/subjects/${subjectId}/posts/`, postData, { headers });
      }
      // createPost(formData: FormData): Observable<any> {
      // const headers = new HttpHeaders().set('enctype', 'multipart/form-data');
@@ -230,5 +244,23 @@ private messageType: string | null = null;
      // ==========================================================================================================
      Ai_chat(message: string): Observable<any> {
           return this.http.post<any>(this.baseUrls + '/aichat/', { message },{ headers: this.headers });
-  }
+     
+     }
+     //===========================================================================================================
+
+     getMessages(): Observable<any> {
+          return this.http.get<any>(`${this.baseUrls}/messages/`);
+     }
+     
+     sendMessage(message: { receiver: number, content: string }): Observable<any> {
+          return this.http.post<any>(`${this.baseUrls}/messages/send/`, message);
+     }
+     
+     getMessage(id: number): Observable<any> {
+          return this.http.get<any>(`${this.baseUrls}/messages/${id}/`);
+     }
+     
+     deleteMessage(id: number): Observable<void> {
+          return this.http.delete<void>(`${this.baseUrls}/messages/${id}/delete/`);
+     }
 }

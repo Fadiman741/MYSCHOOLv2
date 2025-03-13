@@ -1,4 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule ,NgForm } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -18,10 +19,12 @@ import { ApiService } from '../../../services/api.service';
 })
 export class CreateAnnoucementComponent{
 
-  announcement: { title: string; description: string } = {
+  announcement: { title: string; description: string; image: File | null; video: File | null } = {
     title: '',
     description: '',
-  };  
+    image: null,
+    video: null,
+  };
 
   modules = {
     formula: true,
@@ -36,7 +39,10 @@ export class CreateAnnoucementComponent{
       [{ script: 'sub' }, { script: 'super' }], // Added subscript and superscript
       ['link', 'image', 'video'], // Added video support
       ['clean'] // Added clean formatting option
-    ]
+    ],
+    handlers: {
+      image: () => this.uploadImage()
+    }
   };
 
   searchQuery: string = '';
@@ -44,6 +50,7 @@ export class CreateAnnoucementComponent{
   tagInput: string = '';
 
   post = {
+    title : '',
     content: '',
     tags: [] as string[],
     image: null,
@@ -61,6 +68,7 @@ export class CreateAnnoucementComponent{
     { id: 4, name: 'Bob Brown', profilePicture: 'https://i.pravatar.cc/100?u=4' },
     { id: 5, name: 'Charlie Davis', profilePicture: 'https://i.pravatar.cc/100?u=5' },
   ];
+  http: any;
 
   constructor(
     public dialogRef: MatDialogRef<CreateAnnoucementComponent>,
@@ -97,14 +105,7 @@ export class CreateAnnoucementComponent{
       friend.name.toLowerCase().includes(query)
     );
   }
-  onFileSelected(event: any, type: string) {
-    const file = event.target.files[0];
-    if (type === 'image') {
-      this.post.image = file;
-    } else if (type === 'video') {
-      this.post.video = file;
-    }
-  }
+
   onCancel(): void {
     this.dialogRef.close();
   }
@@ -118,42 +119,62 @@ export class CreateAnnoucementComponent{
   removeTag(index: number) {
     this.post.tags.splice(index, 1);
   }
-  onAnnoucementSubmit(form: NgForm) {
-    if (form.valid) {
-      const announcement = {
-        title: "article",
-        description: this.announcement.description,
-      };
+  // onAnnoucementSubmit(form: NgForm) {
+  //   if (form.valid) {
+  //     const formData = new FormData();
+  //     formData.append('title', this.announcement.title);
+  //     formData.append('description', this.announcement.description);
+  //     if (this.announcement.image) {
+  //       formData.append('image', this.announcement.image);
+  //     }
+  //     if (this.announcement.video) {
+  //       formData.append('video', this.announcement.video);
+  //     }
 
-      // Call the API service to create the announcement
-      this.apiService.create_announcement(announcement).subscribe(
-        (response) => {
-          console.log('Announcement posted successfully:', response);
-          // Reset the form after successful submission
-          form.resetForm();
-          // Clear the announcement object
-          this.announcement = { title: '', description: '' };
-          // Optionally, you can navigate or show a success message here
-        },
-        (error) => {
-          console.error('Announcement posting failed:', error);
-          // Handle error, e.g., show an error message to the user
-        }
-      );
+  //     this.apiService.create_announcement(formData).subscribe(
+  //       (response) => {
+  //         console.log('Announcement posted successfully:', response);
+  //         form.resetForm();
+  //         this.announcement = { title: '', description: '', image: null, video: null };
+  //         this.dialogRef.close();
+  //       },
+  //       (error) => {
+  //         console.error('Announcement posting failed:', error);
+  //       }
+  //     );
+  //   }
+  // }
+
+  onFileSelected(event: any, type: string) {
+    const file = event.target.files[0];
+    if (file && type === 'image') {
+      this.announcement.image = file;
     }
   }
+  // onFileSelected(event: any, type: string) {
+  //   const file = event.target.files[0];
+  //   if (type === 'image') {
+  //     this.post.image = file;
+  //   } else if (type === 'video') {
+  //     this.post.video = file;
+  //   }
+  // }
   onSubmit(postForm: NgForm) {
     if (postForm.valid) {
-      const announcement = {
-        title: "The Power of Education: A Catalyst for Growth and Progress",
-        description: this.announcement.description,
-      };
+      const formData = new FormData();
+      formData.append('title', this.announcement.title);
+      formData.append('description', this.announcement.description);
+      
+      if (this.announcement.image) {
+        formData.append('image', this.announcement.image);
+      }
   
-      this.apiService.create_announcement(announcement).subscribe(
+      this.apiService.create_announcement(formData).subscribe(
         (response) => {
           console.log('Announcement posted successfully:', response);
           postForm.resetForm(); // Reset the form
-          this.dialogRef.close(this.post);
+          this.announcement = { title: '', description: '', image: null, video: null };
+          this.dialogRef.close();
         },
         (error) => {
           console.error('Announcement posting failed:', error);
@@ -161,5 +182,28 @@ export class CreateAnnoucementComponent{
       );
     }
   }
+  quillEditor: any;
+  uploadImage() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        this.apiService.uploadImage(file).subscribe(response => {
+          const range = this.quillEditor.getSelection();
+          this.quillEditor.insertEmbed(range.index, 'image', response.image_url);
+        });
+      }
+    };
+  }
   
+}
+interface UploadResponse {
+  image_url: string;
 }

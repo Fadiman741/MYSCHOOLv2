@@ -105,7 +105,10 @@ export class HomepageComponent implements OnInit {
     },
     nav: true
   }
-  navigateToViewAnnouncement(id: number): void {
-    this.router.navigate(['view-announcement/', id]);
+  // navigateToViewAnnouncement(id: number): void {
+  //   this.router.navigate(['view-announcement/', id]);
+  // }
+  viewAnnouncement(data: any) {
+    this.router.navigate(['annoucement', data.id]);
   }
 }

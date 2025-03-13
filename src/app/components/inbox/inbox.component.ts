@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { PagetiltleComponent } from "../pagetiltle/pagetiltle.component";
 import { ChatComponent } from "../chat/chat.component";
 import { ChatWindowComponent } from "../chat-window/chat-window.component";
+import { TimelineComponent } from "../timeline/timeline.component";
 
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css'],
-  imports: [PagetiltleComponent, ChatComponent, ChatWindowComponent],
+  imports: [PagetiltleComponent, ChatComponent, ChatWindowComponent, TimelineComponent],
   standalone:true,
 })
 export class InboxComponent implements OnInit {

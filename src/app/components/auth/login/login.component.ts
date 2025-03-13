@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
           this.dialogRef.close();
 
           this.router.navigate(["/"])
+          window.location.reload()
           // this.router.navigate(["/"]).then(()=>{
           //   // window.location.reload();
           // })

@@ -1,116 +1,46 @@
+<!-- Breadcrumb -->
 <!-- <app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle> -->
 
+<div class="p-4">
+  <!-- Search Bar -->
+  <div class="mb-4">
+    <input
+      [(ngModel)]="searchQuery"
+      (input)="searchChats()"
+      type="text"
+      placeholder="Search chats..."
+      class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+    />
+    <button
+      *ngIf="searchQuery"
+      (click)="clearSearch()"
+      class="mt-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+    >
+      Clear
+    </button>
+  </div>
 
-<!-- <div class="card mb-sm-3 mb-md-0 contacts_card">
-  <div class="card-header">
-    <div class="input-group">
-      <input type="text" placeholder="Search..." class="form-control search">
-      <div class="input-group-prepend">
-        <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+  <!-- Recent Chats List -->
+  <h2 class="text-lg font-semibold mb-4">Recent Chats</h2>
+  <ul>
+    <li *ngFor="let chat of filteredChats" class="mb-4 p-2 hover:bg-gray-100 rounded-lg cursor-pointer">
+      <div class="flex items-center justify-between">
+        <div class="flex-1">
+          <p class="font-medium">{{ chat.name }}</p>
+          <p class="text-sm text-gray-500">{{ chat.lastMessage }}</p>
+        </div>
+        <div class="flex items-center">
+          <span class="text-sm text-gray-400 mr-4">{{ chat.timestamp }}</span>
+          <!-- <button
+            (click)="deleteChat(chat.id)"
+            class="text-red-500 hover:text-red-700"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+          </button> -->
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="card-body contacts_body">
-    <ul class="contacts">
-      <li *ngFor="let thread of threads" (click)="selectThread(thread)" [class.active]="thread === selectedThread">
-        <div class="d-flex bd-highlight">
-          <div class="img_cont">
-            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img"> 
-            <span class="online_icon"></span>
-          </div>
-          <div class="user_info">
-            <span>{{ thread.otherUser }}</span>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</div> -->
-<!-- <div style="background-color: #121a36;">
-    <div class="container" style="max-width: 1218px;min-height:85vh;margin: auto; ;">
-        <div class="inbox">
-            <section class="discussions">
-                <div class="discussion search" style="height: 55px;">
-          <div class="searchbar">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            <input type="text" placeholder="Search..."/>
-          </div>
-        </div>
-                <div *ngFor="let thread of threads" (click)="selectThread(thread)" [class.active]="thread === selectedThread">
-                    <div class="discussion message-active">
-                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg)">
-                            <div class="online"></div>
-                        </div>
-                        <div class="desc-contact">
-                            <p class="name">
-                                <b>{{ thread.otherUser }}</b>
-                            </p>
-                            <p class="message">9 pm at the bar if possible 😳</p>
-                        </div>
-                        <div class="timer">12 sec</div>
-                    </div>
-                  </div>
-
-             <a routerLink="/chat">
-                    <div class="discussion">
-                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg);"></div>
-                        <div class="desc-contact">
-                            <p class="name">
-                                <b>Lorem Ipsum</b>
-                            </p>
-                            <p class="message">I've sent you the annual report</p>
-                        </div>
-                        <div class="timer">42 min</div>
-                    </div>
-                </a>
-                <a routerLink="/chat">
-                    <div class="discussion">
-                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg);">
-                            <div class="online"></div>
-                        </div>
-                        <div class="desc-contact">
-                            <p class="name">
-                                <b>Lorem Ipsum</b>
-                            </p>
-                            <p class="message">See you tomorrow ! 🙂</p>
-                        </div>
-                        <div class="timer">2 hour</div>
-                    </div>
-                </a>
-                <a routerLink="/chat">
-                    <div class="discussion">
-                        <a></a>
-                        <div class="photo" style="background-image: url(https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg);"></div>
-                        <div class="desc-contact">
-                            <p class="name">
-                                <b>Lorem Ipsum</b>
-                            </p>
-                            <p class="message">Ahahah 😂</p>
-                        </div>
-                        <div class="timer">4 days</div>
-                    </div>
-                </a> 
-            </section>
-        </div>
-    </div>
-</div>  -->
-<!-- <div *ngIf="thread">
-  <h3>Chat with {{ thread.other_user }}</h3>
-  <ul>
-    <li *ngFor="let message of thread.messages">
-      <strong>{{ message.is_user ? 'You' : thread.other_user }}:</strong>
-      {{ message.text }} ({{ message.timestamp | date:'short' }})
-    </li>
-  </ul>
-  <input [(ngModel)]="newMessageText" type="text" placeholder="Type a message..." />
-  <button (click)="sendMessage()">Send</button>
-</div> -->
-<div>
-  <h2>Threads</h2>
-  <ul>
-    <li *ngFor="let thread of threads">
-      <a [routerLink]="['/threads', thread.id]">{{ thread.other_user }}</a>
     </li>
   </ul>
 </div>
-

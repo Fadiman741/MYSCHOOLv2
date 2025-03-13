@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '../../../services/api.service';
+import { ActivatedRoute } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 // import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -22,10 +24,14 @@ export class CreatePostComponent implements OnInit {
     file: null
   };
 
-  constructor(public dialogRef: MatDialogRef<CreatePostComponent>, private apiservice: ApiService) { }
+  constructor(public dialogRef: MatDialogRef<CreatePostComponent>, private apiservice: ApiService,@Inject(MAT_DIALOG_DATA) public data: { gradeId: number; subjectId: number }) { }
 
   
   ngOnInit() {
+ 
+    console.log('Grade ID:', this.data.gradeId);
+    console.log('Subject ID:', this.data.subjectId);
+
     this.apiservice.getCurrentUser().subscribe(
       response => {
         this.view.currentUser = response;
@@ -39,26 +45,29 @@ export class CreatePostComponent implements OnInit {
   onClose(): void {
     this.dialogRef.close();
   }
-  onforumSubmit(form:any ) {
-    if (form.valid) {
-      const post = {
-        content: form.value.description,
-      };
-      this.apiservice.create_posts(post).subscribe(
-        (response) => {
-          console.log('Post posted successful:', response);
-          // Handle successful, e.g., show a success message to the user
-          this.view.posts = []
-          this.view.getPosts()
-          form.resetForm();
-        },
-        (error) => {
-          console.error('Post failed:', error);
-          // Handle error, e.g., display an error message to the user
-        }
-      );
-    }
+  makeOneWord(input: string): string {
+    return input.replace(/\s+/g, '');
   }
+  // onforumSubmit(form:any ) {
+  //   if (form.valid) {
+  //     const post = {
+  //       content: form.value.description,
+  //     };
+  //     this.apiservice.createPost(post).subscribe(
+  //       (response) => {
+  //         console.log('Post posted successful:', response);
+  //         // Handle successful, e.g., show a success message to the user
+  //         this.view.posts = []
+  //         this.view.getPosts()
+  //         form.resetForm();
+  //       },
+  //       (error) => {
+  //         console.error('Post failed:', error);
+  //         // Handle error, e.g., display an error message to the user
+  //       }
+  //     );
+  //   }
+  // }
   selectedImage: File | null = null;
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -90,7 +99,7 @@ export class CreatePostComponent implements OnInit {
     
     formData.append('taggedFriends', JSON.stringify(taggedFriends));
 
-    this.apiservice.createPost(this.view.gradeId, this.view.subjectId, formData)
+    this.apiservice.createPost(this.data.gradeId, this.data.subjectId, formData)
       .subscribe({
         next: (response) => console.log('✅ Post created successfully:', response),
         error: (error) => console.error('❌ Error creating post:', error),

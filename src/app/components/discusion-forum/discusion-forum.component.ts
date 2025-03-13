@@ -205,7 +205,8 @@ export class DiscusionForumComponent implements OnInit {
   // }
   openModal(): void {
     this.dialog.open(CreatePostComponent, {
-      width: '600px'
+      width: '600px',
+      data: { gradeId: this.view.gradeId, subjectId: this.view.subjectId }
     });
   }
   openEditModal(post: any): void {

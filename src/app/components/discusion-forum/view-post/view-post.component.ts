@@ -5,8 +5,11 @@ import {  } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { PagetiltleComponent } from "../../pagetiltle/pagetiltle.component";
 import { LastSeenPipe } from "../../../pipes/lastSeen/lastSeen.pipe";
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { TimelineComponent } from "../../timeline/timeline.component";
+import { MatIconModule } from '@angular/material/icon';
+import { EditPostComponent } from '../../modals/edit-post/edit-post.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -14,7 +17,7 @@ import { TimelineComponent } from "../../timeline/timeline.component";
   selector: 'app-view-post',
   templateUrl: './view-post.component.html',
   styleUrls: ['./view-post.component.css'],
-  imports: [PagetiltleComponent, LastSeenPipe, NgIf, NgFor, TimelineComponent],
+  imports: [PagetiltleComponent, LastSeenPipe, NgIf, NgFor, TimelineComponent, NgClass, MatIconModule,],
   standalone:true,
   
 })
@@ -32,7 +35,7 @@ export class ViewPostComponent implements OnInit {
 
   breadCrumbItems: Array<{}> = [];
 
-  constructor(private route: ActivatedRoute,private apiservice:ApiService) { }
+  constructor(private route: ActivatedRoute,private apiservice:ApiService,public dialog: MatDialog) { }
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Home page' },{ label: 'grade 10' },{ label: 'Mathematics' }];
@@ -45,12 +48,12 @@ export class ViewPostComponent implements OnInit {
 
       // this.post_id = this.post.id
     });
-    this.apiservice.getCommentsByPost(this.view.postId).subscribe((data: any) => {
-      this.view.comments = data;
-      console.log("Comments",this.view.comments)
+    // this.apiservice.getCommentsByPost(this.view.postId).subscribe((data: any) => {
+    //   this.view.comments = data;
+    //   console.log("Comments",this.view.comments)
 
-      // this.post_id = this.post.id
-    });
+    //   // this.post_id = this.post.id
+    // });
     // console.log(this.post_id)
     // ================================================
     // this.route.paramMap.subscribe(params => {
@@ -96,5 +99,37 @@ export class ViewPostComponent implements OnInit {
   onComment(forumForm: any, post_id: number) {
     // Handle comment form submission
   }
+  dropdownOpen: { [key: number]: boolean } = {};
+  toggleDropdown(postId: number) {
+    this.dropdownOpen[postId] = !this.dropdownOpen[postId];
+  }
 
+  isImage(url: string): boolean {
+    return /\.(jpg|jpeg|png|gif)$/i.test(url);
+  }
+
+  isVideo(url: string): boolean {
+    return /\.(mp4|webm|ogg)$/i.test(url);
+  }
+  openEditModal(post: any): void {
+    const dialogRef = this.dialog.open(EditPostComponent, {
+      width: '700px',
+      data: {post }  // Pass the current announcement to the modal
+    });
+  }
+  toggleLike(item:any) {
+    item.isLiked = !item.isLiked;
+    item.likes += item.isLiked ? 1 : -1;
+  }
+  onDeletePost = (postId: any) =>{
+    this.apiservice.deletePost(postId).subscribe(
+      () => {
+        console.log('Item deleted successfully');
+        // this.posts = this.posts.filter((post: { id: any; }) => post.id !== postId)
+      },
+      (error) => {
+        console.error('Error deleting item:', error);
+      }
+      )
+  }
 }

@@ -10,6 +10,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     @apply w-full max-w-4xl bg-white shadow-lg rounded-xl !important;
 }
+::ng-deep .custom-dialog .mat-mdc-dialog-panel {
+  max-width: 36rem; /* Equivalent to Tailwind's max-w-4xl */
+  width: 100%;
+}
 app-login{
   @apply max-w-xl ;
 }
@@ -44,4 +48,7 @@ app-login{
 
 .ql-editor a {
   @apply text-blue-500 underline;
+}
+.ql-editor {
+  @apply text-left;
 }

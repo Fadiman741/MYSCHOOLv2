@@ -1,185 +1,121 @@
-
 <app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
-<section class="bg-[#121a36]">
-    <section class="bg-gray-200 h-[400px] bg-[url('https://api.travelfind.me/v1/images/site/c66224c5-e632-44e7-b486-5b696fa7a08d')]">
-        
-    </section>
-    <div>
-        <div class="max-w-[1250px] min-h-screen mx-auto p-4 bg-gray-100 background-image rounded-lg relative -mt-[200px]">
-          <div class="w-full min-h-screen flex justify-center">
-            <div class="w-full">
-              <!-- Left Side: Create Post & Posts -->
-              <div class="w-full space-y-6">
-                <!-- Create Post Section -->
-                <div *ngIf="currentUser" class="bg-white p-2 rounded-lg shadow">
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-md bg-gray-300 overflow-hidden">
-                        <img class="w-full h-full object-cover" src="https://i.pravatar.cc/100" />
-                      </div>
-                      <h3 class="text-gray-800 font-semibold capitalize">
-                        {{ currentUser.first_name }} {{ currentUser.last_name }}
+<section class="">
+  <section class="bg-gray-200 h-[400px] bg-[url('https://api.travelfind.me/v1/images/site/c66224c5-e632-44e7-b486-5b696fa7a08d')]">
+  </section>
+  <div>
+    <div class="max-w-[1250px] min-h-screen mx-auto p-4 bg-white rounded-lg relative -mt-[200px]">
+      <div class="w-full min-h-screen flex justify-center">
+        <div class="w-full">
+          <div class="w-full space-y-6">
+            <!-- CREATE POST -->
+            <div class="flex justify-between bg-[#121a36] rounded-lg p-2">
+              <!-- <div *ngIf="view.currentUser != null" class="flex justify-between p-2"> -->
+                <div class="w-full flex flex-row justify-between items-center">
+                  <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-md bg-gray-300 overflow-hidden">
+                      <img class="w-full h-full object-cover" src="https://i.pravatar.cc/100" alt="User Avatar" />
+                    </div>
+                    <div>
+                      <h3 class="text-gray-300 font-semibold capitalize">
+                        {{ currentUser?.first_name }} {{ currentUser?.last_name }}
                       </h3>
+                      <span class="text-gray-500">{{ currentUser?.occupation }}</span>
                     </div>
-                    <button class="bg-teal-500 text-white px-4 py-1.5 rounded-md" (click)="openModal()">
-                      Create Post
-                    </button>
                   </div>
+                  <button (click)="openModal()" class="bg-green-500 px-4 py-2 rounded-lg text-gray-100 hover:bg-green-600 transition-colors">
+                    Create Post
+                  </button>
                 </div>
-                <!-- Posts List -->
-                <div *ngFor="let item of posts" class="bg-white rounded-lg shadow p-4 space-y-3">
-                  <!-- Post Header -->
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-md bg-gray-300 overflow-hidden">
-                        <img class="w-full h-full object-cover" src="https://i.pravatar.cc/100?u={{ item.user.id }}" />
-                      </div>
-                      <div>
-                        <h4 class="font-semibold">{{ item.user.first_name }} {{ item.user.last_name }}</h4>
-                        <p class="text-gray-500 text-sm">{{ item.user.occupation }} | {{ item.created_at | lastSeen }}</p>
-                      </div>
-                    </div>
-          
-                    <!-- Dropdown Actions -->
-                    <div class="relative">
-                      <!-- Dropdown Trigger Button -->
-                      <button
-                        id="dropdownMenuIconButton"
-                        class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50"
-                        type="button"
-                        (click)="toggleDropdown(item.id)"
-                      >
-                        <svg
-                          class="w-5 h-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 4 15"
-                        >
-                          <path
-                            d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-                          />
-                        </svg>
-                      </button>
-                    
-                      <!-- Dropdown Menu -->
-                      <div
-                        id="dropdownDots"
-                        class="z-10 absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow- hidden"
-                        [class.hidden]="!dropdownOpen[item.id]"
-                      >
-                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownMenuIconButton">
-                          <!-- Edit Post Option -->
-                          <li>
-                            <a
-                              href="#"
-                              class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                              (click)="openEditModal(item)"
-                            >
-                              <span class="material-icons text-gray-500 mr-2">edit</span>
-                              Edit Post
-                            </a>
-                          </li>
-                    
-                          <!-- Delete Post Option -->
-                          <li>
-                            <a
-                              href="#"
-                              class="flex items-center px-4 py-2 hover:bg-red-100 text-red-600 cursor-pointer"
-                              (click)="onDeletePost(item.id)"
-                            >
-                              <span class="material-icons text-red-500 mr-2">delete</span>
-                              Delete Post
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-          
-                  <!-- Post Content -->
-                  <p (click)="viewPost(item)" class="text-gray-800">{{ item.content }}</p>
-          
-                  <!-- Post Media (Images/Videos) -->
-                  <div class="mt-2">
-                <!-- <div *ngIf="item.media" class="mt-2"> -->
-                    <!-- <img *ngIf="isImage(item.media)" [src]="item.media" class="w-full h-60 object-cover rounded-md" /> -->
-                    <img src="https://www.thurleighprimary.uk/_site/data/files/images/slideshow/70/4CF9E32CBF591391B55E21D86D73478B.jpg" class="w-full h-60 object-cover rounded-md" />
-                    <video *ngIf="isVideo(item.media)" controls class="w-full h-60 rounded-md">
-                      <source [src]="item.media" type="video/mp4">
-                    </video>
-                  </div>
-          
-                  <!-- Post Footer -->
-                  <div class="flex items-center justify-between text-gray-500 text-sm mt-2">
-                    <div class="flex items-center gap-4">
-                      <!-- Like Button -->
-                      <button
-                        class="flex items-center"
-                        (click)="toggleLike(item)"
-                        [ngClass]="{ 'text-red-500': item.isLiked }"
-                      >
-                        <mat-icon>{{ item.isLiked ? 'favorite' : 'favorite_border' }}</mat-icon>
-                        <span class="ml-1">{{ item.likes }} Likes</span>
-                      </button>
-                  
-                      <!-- Comment Button -->
-                      <button class="hover:text-blue-500 flex items-center">
-                        <mat-icon>comment</mat-icon>
-                        <span class="ml-1">{{ item.comments.length }} Comments</span>
-                      </button>
-                  
-                      <!-- Share Button -->
-                      <button class="hover:text-green-500 flex items-center">
-                        <mat-icon class="text-md">share</mat-icon>
-                        <span class="ml-1">Share</span>
-                      </button>
-                    </div>
-                  </div>
-          
-                  <!-- People Who Liked the Post -->
-                  <!-- <div class="flex items-center mt-3">
-                    <div class="flex -space-x-2">
-                      <img *ngFor="let user of item.likedBy.slice(0, 3)" 
-                           class="w-8 h-8 rounded-full border-2 border-white" 
-                           [src]="user.url" 
-                           [alt]="user.name" />
-                    </div>
-                    <span class="text-gray-500 text-sm ml-2">
-                      {{ item.likedBy.length }} people liked this
-                    </span>
-                  </div> -->
-          
+          </div>
+          <!-- Posts List -->
+          <div *ngFor="let item of posts" class="bg-gray-100 rounded-lg shadow p-4 space-y-3">
+            <!-- Post Header -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-md bg-gray-300 overflow-hidden">
+                  <img class="w-full h-full object-cover" [src]="item.user.profile_picture || 'https://i.pravatar.cc/100?u=20'" />
+                </div>
+                <div>
+                  <h4 class="font-semibold">{{ item.user.first_name }} {{ item.user.last_name }}</h4>
+                  <p class="text-gray-500 text-sm">{{ item.user.occupation }} | {{ item.created_at | lastSeen }}</p>
                 </div>
               </div>
-          
-              <!-- Right Side: Announcements -->
-              <!-- <div class="w-full lg:w-1/3 space-y-6">
-                <div *ngFor="let item of announcements" class="bg-white p-4 rounded-lg shadow text-center">
-                  
-                  Announcement Image
-                  <div class="w-24 h-24 mx-auto rounded-md overflow-hidden">
-                    <img class="w-full h-full object-cover" src="{{item.url }}" />
-                  </div>
-          
-                  Announcement Details
-                  <h4 class="text-gray-800 font-semibold mt-3">{{ item.title }}</h4>
-                  <p class="text-gray-600 text-md">{{ item.description }}</p>
-          
-                  Read More Button
-                  <button  class="bg-green-500 text-white px-4 py-1.5 rounded-md mt-2">
-                    Read More
-                  </button>
-          
-                  <p class="text-gray-500 text-xs mt-2">{{ item.user.occupation }} | {{ item.datecreated | lastSeen }}</p>
+              <!-- Dropdown Actions -->
+              <div class="relative">
+                <!-- Dropdown Trigger Button -->
+                <button id="dropdownMenuIconButton"
+                  class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50"
+                  type="button" (click)="toggleDropdown(item.id)">
+                  <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                    viewBox="0 0 4 15">
+                    <path
+                      d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                  </svg>
+                </button>
+                <!-- Dropdown Menu -->
+                <div id="dropdownDots"
+                  class="z-10 absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow- hidden"
+                  [class.hidden]="!dropdownOpen[item.id]">
+                  <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownMenuIconButton">
+                    <!-- Edit Post Option -->
+                    <li>
+                      <a href="#" class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        (click)="openEditModal(item)">
+                        <span class="material-icons text-gray-500 mr-2">edit</span>
+                        Edit Post
+                      </a>
+                    </li>
+                    <!-- Delete Post Option -->
+                    <li>
+                      <a href="#" class="flex items-center px-4 py-2 hover:bg-red-100 text-red-600 cursor-pointer"
+                        (click)="onDeletePost(item.id)">
+                        <span class="material-icons text-red-500 mr-2">delete</span>
+                        Delete Post
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-              </div> -->
+              </div>
+            </div>
+            <!-- Post Content -->
+            <p class="text-gray-800">{{ item.content }}</p>
+            <!-- Post Media (Images/Videos) -->
+            <div class="mt-2">
+              <img *ngIf="item.image"  [src]="'https://res.cloudinary.com/dzpr6z2z5/' + (item.image || 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg')" class="w-full h-60 object-cover rounded-md" />
+              <video *ngIf="isVideo(item.media)" controls class="w-full h-60 rounded-md">
+                <source [src]="item.media" type="video/mp4">
+              </video>
+            </div>
+
+            <!-- Post Footer -->
+            <div class="flex items-center justify-between text-gray-500 text-sm mt-2">
+              <div class="flex items-center gap-4">
+                <!-- Like Button -->
+                <button class="flex items-center" (click)="toggleLike(item)"
+                  [ngClass]="{ 'text-red-500': item.user_has_liked }">
+                  <mat-icon>{{ item.user_has_liked ? 'favorite' : 'favorite_border' }}</mat-icon>
+                  <span class="ml-1">{{ item.like_count }} Likes</span>
+                </button>
+
+                <!-- Comment Button -->
+                <button (click)="viewPost(item)" class="hover:text-blue-500 flex items-center">
+                  <mat-icon>comment</mat-icon>
+                  <span class="ml-1">{{ item.comments.length || 0}} Comments</span>
+                </button>
+
+                <!-- Share Button -->
+                <button class="hover:text-green-500 flex items-center">
+                  <mat-icon class="text-md">share</mat-icon>
+                  <span class="ml-1">Share</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
     </div>
-</section>
+  </div>
+<!-- </section> -->
 <div class="p-12 bg-[#121a36]">
-    <app-timeline></app-timeline>
+  <app-timeline></app-timeline>
 </div>
-
