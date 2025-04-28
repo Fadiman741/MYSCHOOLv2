@@ -9,6 +9,7 @@ import { FooterComponent } from "../cards/footer/footer.component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule, NgFor, NgStyle } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Meta, Title } from '@angular/platform-browser';
 
 // import { ApiService } from 'src/app/services/api.service';
 
@@ -38,13 +39,21 @@ export class HomepageComponent implements OnInit {
     'background-size': 'cover',
   };
 
-  constructor( private apiservice:ApiService,private router:Router, private cdr: ChangeDetectorRef) { }
+  constructor( private apiservice:ApiService,private router:Router, private cdr: ChangeDetectorRef,private titleService: Title, private metaService: Meta,) { }
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Home page' }];
     this.getTutors();
     this.getAnnouncements();
-  }
+    this.titleService.setTitle('Home | Empowering Education for a Better World');
+    this.metaService.updateTag({ name: 'description', content: 'Access quality education from expert tutors and institutions. Improve your skills, advance your career, and join over 10,000 active learners worldwide.' });
+    this.metaService.updateTag({ name: 'keywords', content: 'Education, Tutors, Institutions, Students, Learning Platform, Online Learning, Academic Support, Courses, Announcements, Knowledge Enhancement' });
+    this.metaService.updateTag({ property: 'og:title', content: 'Empowering Education for a Better World' });
+    this.metaService.updateTag({ property: 'og:description', content: 'Join thousands of learners and experts on our platform. Access quality learning resources anytime, anywhere.' });
+    this.metaService.updateTag({ property: 'og:image', content: 'https://media.istockphoto.com/id/1000887536/photo/back-view-of-elementary-students-raising-their-arms-on-a-class.jpg?s=612x612&w=0&k=20&c=i0PBNmY4nSgOhHyy9AU5OAiJrOsHk7f7jLcNkO6CApE=' });
+    this.metaService.updateTag({ property: 'og:url', content: 'https://your-website.com' });
+    this.metaService.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    }
     getAnnouncements = () => {
     this.apiservice.getAllAnnouncements().subscribe(
       data => {

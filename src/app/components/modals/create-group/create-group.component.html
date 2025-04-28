@@ -1,0 +1,112 @@
+<!-- Modal Backdrop -->
+<div *ngIf="showCreateForm" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+  (click)="closeModal()">
+  <!-- Modal Container -->
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl" (click)="$event.stopPropagation()">
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between p-4 border-b border-gray-200">
+      <h3 class="text-lg font-semibold text-gray-900">Create New Group</h3>
+      <button type="button" class="text-gray-400 hover:text-gray-500" (click)="closeModal()">
+        <span class="sr-only">Close</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="p-6">
+      <form class="space-y-4" (ngSubmit)="onSubmit()" [formGroup]="groupForm">
+        <!-- Avatar Upload Section -->
+        <div class="flex flex-col items-center">
+          <div class="relative mb-4">
+            <img [src]="avatarPreview || 'assets/default-group-avatar.png'" 
+                 alt="Group avatar preview"
+                 class="w-24 h-24 rounded-full object-cover border-2 border-gray-300">
+            <label for="avatar-upload" 
+                   class="absolute bottom-0 right-0 bg-white rounded-full p-1 border border-gray-300 cursor-pointer hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span class="sr-only">Upload avatar</span>
+            </label>
+            <input id="avatar-upload" type="file" accept="image/*" class="hidden" (change)="onAvatarChange($event)">
+          </div>
+          <p class="text-sm text-gray-500">Click to upload a group image (max 2MB)</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="group-name" class="block text-sm font-medium text-gray-700 mb-1">Group Name*</label>
+            <input id="group-name" type="text" formControlName="name"
+              class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required>
+            <div *ngIf="groupForm.get('name')?.invalid && (groupForm.get('name')?.dirty || groupForm.get('name')?.touched)"
+                 class="mt-1 text-sm text-red-600">
+              <div *ngIf="groupForm.get('name')?.errors?.['required']">Group name is required</div>
+              <div *ngIf="groupForm.get('name')?.errors?.['maxlength']">Maximum 50 characters allowed</div>
+            </div>
+          </div>
+          <div>
+            <label for="group-grade" class="block text-sm font-medium text-gray-700 mb-1">Grade Level</label>
+            <select id="group-grade" formControlName="grade"
+              class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              <option value="">Select Grade</option>
+              <option value="9th">9th Grade</option>
+              <option value="10th">10th Grade</option>
+              <option value="11th">11th Grade</option>
+              <option value="12th">12th Grade</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="group-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <textarea id="group-description" formControlName="description" rows="3"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+          <div *ngIf="groupForm.get('description')?.errors?.['maxlength']"
+               class="mt-1 text-sm text-red-600">
+            Maximum 200 characters allowed
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="subscription-amount" class="block text-sm font-medium text-gray-700 mb-1">Subscription Fee</label>
+            <div class="relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500">$</span>
+              </div>
+              <input id="subscription-amount" type="number" formControlName="subscriptionAmount"
+                class="block w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="0.00">
+              <div *ngIf="groupForm.get('subscriptionAmount')?.invalid"
+                   class="mt-1 text-sm text-red-600">
+                Must be between $0 and $1000
+              </div>
+            </div>
+          </div>
+          <div>
+            <label for="group-tags" class="block text-sm font-medium text-gray-700 mb-1">Tags (comma separated)</label>
+            <input id="group-tags" type="text" formControlName="tags"
+              class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Art, Design, High School">
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="flex justify-end space-x-3 pt-4">
+          <button type="button" (click)="closeModal()"
+            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Cancel
+          </button>
+          <button type="submit" [disabled]="groupForm.invalid"
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Create Group
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

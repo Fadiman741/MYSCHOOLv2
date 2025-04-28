@@ -1,0 +1,286 @@
+<app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
+
+<div class="flex h-screen bg-gray-50">
+    <!-- Left Sidebar - Group Info -->
+    <div class="w-80 border-r border-gray-200 bg-white flex flex-col">
+      <!-- Group Header -->
+      <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+        <h2 class="font-bold text-lg">Calculus Study Group</h2>
+        <button class="text-blue-600 hover:text-blue-800" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+      
+      <!-- Members List -->
+      <div class="p-4 border-b border-gray-200">
+        <h3 class="font-medium text-gray-700 mb-2 flex justify-between items-center">
+          Members ({{ members.length }})
+          <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+            {{ onlineMembersCount }} Online
+          </span>
+        </h3>
+        <div class="space-y-2">
+          <div *ngFor="let member of members" class="flex items-center space-x-2 p-1 hover:bg-gray-50 rounded">
+            <img [src]="member.avatar" class="w-8 h-8 rounded-full">
+            <span class="text-sm">{{ member.name }}</span>
+            <span *ngIf="member.isAdmin" class="text-xs bg-blue-100 text-blue-800 px-1 rounded">Admin</span>
+            <span *ngIf="member.isMentor" class="text-xs bg-purple-100 text-purple-800 px-1 rounded">Mentor</span>
+            <span *ngIf="member.isOnline" class="w-2 h-2 bg-green-500 rounded-full ml-auto"></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Study Materials -->
+      <div class="flex-1 overflow-y-auto p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="font-medium text-gray-700">Study Materials</h3>
+          <button mat-icon-button class="text-blue-600" (click)="uploadFileInput.click()">
+            <mat-icon>upload</mat-icon>
+            <input #uploadFileInput type="file" hidden (change)="handleFileInput($event)">
+          </button>
+        </div>
+        
+        <div class="flex space-x-2 mb-4 overflow-x-auto pb-2">
+          <button *ngFor="let category of categories" 
+                  class="px-3 py-1 rounded-full text-sm whitespace-nowrap"
+                  [class.bg-blue-600]="activeCategory === category"
+                  [class.text-white]="activeCategory === category"
+                  [class.bg-gray-100]="activeCategory !== category"
+                  (click)="activeCategory = category">
+            {{ category }}
+          </button>
+        </div>
+        
+        <div class="space-y-2">
+          <div *ngFor="let resource of filteredResources" 
+               class="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer"
+               (click)="downloadFile(resource)">
+            <div class="p-2 rounded-lg mr-3"
+                 [ngClass]="{
+                   'bg-red-100 text-red-600': resource.type === 'pdf',
+                   'bg-blue-100 text-blue-600': resource.type === 'doc',
+                   'bg-gray-100 text-gray-600': !resource.type
+                 }">
+              <mat-icon>{{ getResourceIcon(resource.type) }}</mat-icon>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium truncate">{{ resource.name }}</p>
+              <p class="text-xs text-gray-500">{{ resource.size }} • {{ resource.uploadedBy }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Main Chat Area -->
+    <div class="flex-1 flex flex-col">
+      <!-- Messages -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4" #messagesContainer>
+        <div *ngFor="let message of messages" [ngClass]="{'flex justify-end': message.sender === currentUser.id}">
+          <div [ngClass]="{
+            'bg-blue-600 text-white': message.sender === currentUser.id,
+            'bg-white border border-gray-200': message.sender !== currentUser.id
+          }" class="max-w-xs md:max-w-md rounded-xl p-4 shadow-sm relative">
+            <!-- Message header -->
+            <div class="flex items-center space-x-2 mb-1">
+              <img [src]="getUser(message.sender).avatar" class="w-6 h-6 rounded-full">
+              <span class="font-medium text-sm">{{ getUser(message.sender).name }}</span>
+              <span class="text-xs opacity-80">{{ message.time | date:'shortTime' }}</span>
+            </div>
+            
+            <!-- Message content -->
+            <p *ngIf="message.text" class="whitespace-pre-wrap">{{ message.text }}</p>
+            
+            <!-- Media attachments -->
+            <div *ngIf="message.image" class="mt-2 rounded-lg overflow-hidden">
+              <img [src]="message.image" class="max-h-60 w-auto rounded-lg cursor-pointer" (click)="openLightbox(message.image)">
+            </div>
+            
+            <!-- File attachments -->
+            <div *ngIf="message.file" class="mt-2 flex items-center p-2 bg-gray-100 rounded-lg">
+              <mat-icon class="text-gray-500 mr-2">insert_drive_file</mat-icon>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium truncate">{{ message.file.name }}</p>
+                <p class="text-xs text-gray-500">{{ message.file.size  }}</p>
+              </div>
+              <button mat-icon-button (click)="downloadFile(message.file)">
+                <mat-icon class="text-gray-500">download</mat-icon>
+              </button>
+            </div>
+            
+            <!-- Reactions -->
+            <div *ngIf="message.reactions?.length" class="flex space-x-1 mt-2">
+              <button *ngFor="let reaction of message.reactions" 
+                      class="text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">
+                <!-- {{ reaction.emoji }} --> ❤️
+              </button>
+            </div>
+            
+            <!-- Reaction Picker -->
+            <div class="absolute -bottom-3 right-2 flex space-x-1">
+              <button *ngFor="let emoji of ['👍', '❤️', '😮']" 
+                      class="text-xs bg-white bg-opacity-90 shadow rounded-full w-6 h-6 flex items-center justify-center"
+                      (click)="addReaction(message, emoji)">
+                {{ emoji }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Message Input -->
+      <div class="p-4 border-t border-gray-200 bg-white">
+        <!-- Media Preview -->
+        <div *ngIf="mediaPreview" class="mb-3 relative bg-gray-50 p-3 rounded-lg">
+          <div *ngIf="mediaPreview.type === 'image'" class="flex items-center">
+            <img [src]="mediaPreview.url" class="h-16 rounded-lg">
+            <button (click)="clearMediaPreview()" class="ml-2 text-gray-500 hover:text-gray-700">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="mediaPreview.type === 'file'" class="flex items-center">
+            <mat-icon class="text-gray-500 mr-2">insert_drive_file</mat-icon>
+            <div class="flex-1">
+              <p class="text-sm font-medium">{{ mediaPreview.file?.name }}</p>
+              <p class="text-xs text-gray-500">{{ mediaPreview.file?.size  }}</p>
+            </div>
+            <button mat-icon-button (click)="clearMediaPreview()">
+              <mat-icon class="text-gray-500">close</mat-icon>
+            </button>
+          </div>
+        </div>
+        
+        <div class="flex items-center space-x-2">
+          <!-- Attachment Buttons -->
+          <button mat-icon-button (click)="fileInput.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input #fileInput type="file" hidden (change)="handleFileInput($event)">
+          
+          <button mat-icon-button (click)="imageInput.click()">
+            <mat-icon>image</mat-icon>
+          </button>
+          <input #imageInput type="file" accept="image/*" hidden (change)="handleImageInput($event)">
+          
+          <!-- Message Input -->
+          <div class="flex-1 relative">
+            <textarea [(ngModel)]="newMessage" 
+                      placeholder="Type your message..." 
+                      rows="1"
+                      class="w-full p-3 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-200 resize-none"
+                      ></textarea>
+          </div>
+          
+          <!-- Send Button -->
+          <button mat-icon-button 
+                  (click)="sendMessage()"
+                  [disabled]="!newMessage && !mediaPreview"
+                  class="bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Sidebar - Mentorship -->
+    <div class="w-80 border-l border-gray-200 bg-white p-4">
+      <h3 class="font-bold text-lg mb-4">Mentorship</h3>
+      
+      <!-- Mentor Availability -->
+      <div class="bg-blue-50 p-3 rounded-lg mb-4">
+        <h4 class="font-medium flex items-center">
+          <mat-icon class="text-blue-600 mr-2">school</mat-icon>
+          Available Mentors
+        </h4>
+        <div *ngFor="let mentor of availableMentors" 
+             class="flex items-center mt-2 p-2 hover:bg-blue-100 rounded cursor-pointer"
+             (click)="requestMentorSession(mentor)">
+          <img [src]="mentor.avatar" class="w-10 h-10 rounded-full mr-2">
+          <div class="flex-1">
+            <p class="font-medium">{{ mentor.name }}</p>
+            <p class="text-xs text-gray-600">Expertise: {{ mentor.expertise.join(', ') }}</p>
+            <div class="flex mt-1">
+              <span *ngFor="let day of mentor.availability" 
+                    class="text-xs bg-white text-blue-600 px-1 rounded mr-1">
+                {{ day }}
+              </span>
+            </div>
+          </div>
+          <mat-icon class="text-gray-400">chevron_right</mat-icon>
+        </div>
+      </div>
+      
+      <!-- Upcoming Events -->
+      <div class="mb-6">
+        <h4 class="font-medium mb-2">Upcoming Events</h4>
+        <div *ngFor="let event of upcomingEvents" class="p-2 border-b border-gray-100 hover:bg-gray-50">
+          <p class="font-medium">{{ event.title }}</p>
+          <p class="text-sm text-gray-600 flex items-center">
+            <mat-icon class="text-xs mr-1">schedule</mat-icon>
+            {{ event.date | date:'mediumDate' }} at {{ event.date | date:'shortTime' }}
+          </p>
+          <p class="text-xs text-gray-500 mt-1">Hosted by {{ event.organizer }}</p>
+        </div>
+      </div>
+      
+      <!-- Quick Actions -->
+      <div class="space-y-2">
+        <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 flex items-center justify-center">
+          <mat-icon class="mr-2">event</mat-icon>
+          Create Study Session
+        </button>
+        <button class="w-full border border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-50 flex items-center justify-center">
+          <mat-icon class="mr-2">group_add</mat-icon>
+          Invite Members
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mentor Session Modal -->
+  <div *ngIf="showMentorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+      <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="font-bold text-lg">Request Mentorship Session</h3>
+        <button mat-icon-button (click)="showMentorModal = false">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      <div class="p-4">
+        <div class="flex items-center mb-4">
+          <img [src]="selectedMentor.avatar" class="w-12 h-12 rounded-full mr-3">
+          <div>
+            <p class="font-medium">{{ selectedMentor.name }}</p>
+            <p class="text-sm text-gray-600">{{ selectedMentor.expertise.join(', ') }}</p>
+          </div>
+        </div>
+        
+        <form (ngSubmit)="submitSessionRequest()" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Topic*</label>
+            <input formControlName="topic" type="text" class="w-full p-2 border border-gray-300 rounded-lg">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Date/Time*</label>
+            <input formControlName="preferredDate" type="datetime-local" class="w-full p-2 border border-gray-300 rounded-lg">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <textarea formControlName="description" rows="3" class="w-full p-2 border border-gray-300 rounded-lg"></textarea>
+          </div>
+          
+          <div class="flex justify-end space-x-3 pt-2">
+            <button type="button" (click)="showMentorModal = false" class="px-4 py-2 border border-gray-300 rounded-lg">
+              Cancel
+            </button>
+            <button type="submit" [disabled]="!sessionRequestForm.valid" class="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-400">
+              Send Request
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

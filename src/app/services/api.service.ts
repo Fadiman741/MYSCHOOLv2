@@ -1,7 +1,7 @@
 import { Inject, Injectable ,PLATFORM_ID } from '@angular/core';
 // import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
 // import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
@@ -59,7 +59,7 @@ private messageType: string | null = null;
      // });
      getHeaders(): HttpHeaders {
           const token = this.getAuthToken();
-          console.log(',,,,,,,,,,,,,',token)
+          // console.log(',,,,,,,,,,,,,',token)
           return new HttpHeaders({
               'Content-Type': 'application/json',
               ...(token ? { 'Authorization': `Token ${token}` } : {})
@@ -103,17 +103,21 @@ private messageType: string | null = null;
 // ======================================================  USER ===================================================
      getCurrentUser(): Observable<any> {
           const headers = this.getHeaders();
-          console.log('Headers:', headers);
+          // console.log('Headers:', headers);
      return this.http.get<any>(this.baseUrls +'/get_current_user/',{ headers});
      }
      UpdateCurrentUser(user: any): Observable<any> {
      return this.http.put<any>(this.baseUrls +'/update_current_user/',user, { headers: this.headers });
      }
+     
 //========================================  GET USER DETAILS  ==============================================================
 
      getLoggedInUserDetails(){
           var userId = localStorage.getItem("loggedInUserId");
           return this.http.get(this.baseUrls+ `/update-users/${userId}`);
+     }
+     getUser(userId:any){
+          return this.http.get(this.baseUrls+ `/user/${userId}`);
      }
 //================================================  ANNOUCEMENT  ================================================
      create_announcement(announcement: any): Observable<any> {
@@ -202,6 +206,9 @@ private messageType: string | null = null;
      getAllUsers() : Observable<any>{
           return this.http.get(this.baseUrls + '/users/');
           }
+     getAllTutors() : Observable<any>{
+          return this.http.get(this.baseUrls + '/tutors/');
+          }  
      getUserById(userID: number): Observable<any> {    
           return this.http.get(`${this.baseUrls}/update-users/${userID}`);
      }
@@ -263,4 +270,39 @@ private messageType: string | null = null;
      deleteMessage(id: number): Observable<void> {
           return this.http.delete<void>(`${this.baseUrls}/messages/${id}/delete/`);
      }
+     // ==============================================================================================================
+     getGroups(searchQuery: string = ''): Observable<any> {
+          const headers = this.getHeaders();
+          let params = new HttpParams();
+          if (searchQuery) params = params.append('search', searchQuery);
+          
+          return this.http.get<any>(`${this.baseUrls}/groups/`, { params ,headers})
+        }
+      
+        // Get a single group by ID
+        getGroup(id: number): Observable<any> {
+          return this.http.get<any>(`${this.baseUrls}/${id}`);
+        }
+      
+        // Create a new group
+        createGroup(groupData: any): Observable<any> {
+          return this.http.post<any>(this.baseUrls, groupData);
+        }
+      
+        // Update a group
+        updateGroup(id: number, groupData: any): Observable<any> {
+          return this.http.put<any>(`${this.baseUrls}/${id}`, groupData);
+        }
+      
+        // Delete a group
+        deleteGroup(id: number): Observable<void> {
+          return this.http.delete<void>(`${this.baseUrls}/${id}`);
+        }
+      
+        // Join or leave a group
+        toggleGroupMembership(groupId: number, action: 'join' | 'leave'): Observable<any> {
+          const headers = this.getHeaders();
+
+          return this.http.post(`${this.baseUrls}/groups/${groupId}/join/`, { action ,headers});
+        }
 }

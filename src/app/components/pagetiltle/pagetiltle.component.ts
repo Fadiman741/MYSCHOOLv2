@@ -1,5 +1,5 @@
 import { Component, OnInit ,Input} from '@angular/core';
-import { faLayerGroup,faEnvelope,faBell} from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup,faEnvelope,faBell,faUsers} from '@fortawesome/free-solid-svg-icons';
 import { Router, RouterLink } from '@angular/router';
 import {ApiService} from '../../services/api.service';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -22,13 +22,16 @@ export class PagetiltleComponent implements OnInit {
   @Input() preference: any;
   @Input() preferenceText: any;
   @Input() state: any;
+  inboxCount: number = 10; // or whatever your inbox count should be
+count: number = 5; // notification count
 
 
   faLayerGroup=faLayerGroup;
   faEnvelope=faEnvelope;
   faBell=faBell;
+  faUsers=faUsers;
 
-  count:any;
+  // count:any;
 
   constructor(private apiservice: ApiService,private router:Router) { }
 
@@ -40,6 +43,9 @@ export class PagetiltleComponent implements OnInit {
   }
   viewNotifications(){
     this.router.navigate(['/notifications']);
+  }
+  viewGroups(){
+    this.router.navigate(['/groups']);
   }
   getNotifications(){
     this.apiservice.getAllNotifications().subscribe((data)=>{

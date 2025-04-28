@@ -1,22 +1,75 @@
-<section class="overflow-y-auto">
-  <h2 mat-dialog-title class="text-gray-800 px-4 pt-4">Create a New Announcement</h2>
-  <div mat-dialog-content class="p-4">
-    <form (ngSubmit)="onSubmit(postForm)" #postForm="ngForm" class="flex flex-col space-y-4">
-      <!-- Post Content -->
-      <label>Titles</label>
-      <input type="text" [(ngModel)]="announcement.title" name="title" placeholder="Type a title" class="border p-2 w-full" required />
-      
-      <div class="flex flex-col space-y-2">
-        <quill-editor [style]="{ height:'400px' }" [(ngModel)]="announcement.description" name="description" [modules]="modules"></quill-editor>
-        <input class="pt-12" type="file" (change)="onFileSelected($event, 'image')" accept="image/*" name="image">
+<section class="overflow-y-auto max-h-[90vh]">
+  <div class="sticky top-0 bg-white z-10 border-b border-gray-100 px-6 py-4">
+    <h2 mat-dialog-title class="text-xl font-semibold text-gray-500 text-center">Create New Article</h2>
+  </div>
+
+  <div mat-dialog-content class="p-6">
+    <form [formGroup]="announcementForm" (ngSubmit)="onSubmit()" class="flex flex-col space-y-6">
+      <!-- Title Field -->
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700">Title*</label>
+        <input
+          type="text"
+          formControlName="title"
+          placeholder="Enter announcement title"
+          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+          [class.border-red-500]="announcementForm.get('title')?.invalid && announcementForm.get('title')?.touched"
+        />
+        <div *ngIf="announcementForm.get('title')?.invalid && announcementForm.get('title')?.touched" class="text-red-500 text-sm">
+          Title is required
+        </div>
       </div>
-      
-      <div mat-dialog-actions class="flex justify-end space-x-2 p-4 mt-8">
-        <button mat-button (click)="onCancel()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+
+      <!-- Rich Text Editor -->
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700">Content*</label>
+        <div class="rounded-lg overflow-hidden">
+          <quill-editor
+            formControlName="description"
+            [style]="{ height: '400px', 'border-radius': '0.5rem' }"
+            class="bg-white"
+          ></quill-editor>
+        </div>
+        <div *ngIf="announcementForm.get('description')?.invalid && announcementForm.get('description')?.touched" class="text-red-500 text-sm">
+          Content is required
+        </div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700">Featured Image</label>
+        <div class="flex items-center justify-center w-full">
+          <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+              </svg>
+              <p class="mb-2 text-sm text-gray-500">
+                <span class="font-semibold">Click to upload</span> or drag and drop
+              </p>
+              <p class="text-xs text-gray-500" *ngIf="!selectedFile">PNG, JPG (Max. 10MB)</p>
+              <p class="text-xs text-teal-600 font-medium" *ngIf="selectedFile">{{ selectedFile.name }}</p>
+            </div>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" class="hidden" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div mat-dialog-actions class="flex justify-end space-x-3 pt-4 border-t border-gray-100">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-100 transition-colors"
+        >
           Cancel
         </button>
-        <button mat-button type="submit" [disabled]="postForm.invalid" cdkFocusInitial class="px-4 py-2 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 disabled:bg-teal-300 disabled:cursor-not-allowed">
-          Post
+        <button
+          type="submit"
+          [disabled]="announcementForm.invalid"
+          class="px-5 py-2.5 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-100 transition-colors"
+        >
+          Publish Article
         </button>
       </div>
     </form>

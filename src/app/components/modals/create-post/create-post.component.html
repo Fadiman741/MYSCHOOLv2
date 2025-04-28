@@ -1,87 +1,103 @@
-<div class="create-post bg-white rounded-lg shadow-md p-6 w-full mx-auto">
-    <!-- User Info Section -->
-    <div class="user-info flex items-center space-x-4 mb-6">
+<div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-4xl mx-auto">
+  <!-- User Info Section -->
+  <div class="user-info flex items-center gap-3 mb-6">
+    <div class="relative">
       <img
-        class="w-12 h-12 rounded-full object-cover border-2 border-blue-500"
-        src="https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg"
+        class="w-12 h-12 rounded-full object-cover border-2 border-blue-400 shadow-sm"
+        [src]="view.currentUser?.profile_pic || 'https://i.pravatar.cc/300?u='+view.currentUser?.id"
         alt="User Profile"
+        onerror="this.src='https://i.pravatar.cc/300?img=1'"
       />
-      <span class="text-lg font-semibold text-gray-800">
-        {{ view.currentUser?.first_name }} {{ view.currentUser?.last_name }}
-      </span>
+      <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
     </div>
-  
-    <!-- Form Section -->
-    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="space-y-4">
-      <!-- Textarea for Post Content -->
-      <div class="text-area-container">
-        <textarea
-          rows="3"
-          placeholder="What's on your mind?"
-          [(ngModel)]="postData.content"
-          name="content"
-          required
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-        ></textarea>
+    <span class="text-lg font-semibold text-gray-800">
+      {{ view.currentUser?.first_name }} {{ view.currentUser?.last_name }}
+    </span>
+  </div>
+
+  <!-- Form Section -->
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="space-y-4">
+    <!-- Textarea for Post Content -->
+    <div class="relative">
+      <textarea
+        rows="4"
+        placeholder="What's on your mind, {{ view.currentUser?.first_name }}?"
+        [(ngModel)]="postData.content"
+        name="content"
+        required
+        class="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-gray-700 placeholder-gray-400"
+      ></textarea>
+      <div class="absolute bottom-3 right-3 text-xs text-gray-400">
+        {{ postData.content?.length || 0 }}/500
       </div>
-  
-      <!-- File Input for Image/Video -->
-      <!-- <input
-        type="file"
-        (change)="onFileSelected($event)"
-        accept="image/*"
-        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      /> -->
-  
-      <!-- Feeling Select Dropdown -->
-      <!-- <select
-        name="feeling"
-        [(ngModel)]="postData.feeling"
-        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+    </div>
+
+    <!-- Preview Section -->
+    <div *ngIf="previewUrl" class="relative rounded-xl overflow-hidden border border-gray-200">
+      <img *ngIf="!isVideoFile" [src]="previewUrl" alt="Preview" class="w-full max-h-32 object-contain bg-gray-50">
+      <video *ngIf="isVideoFile" controls class="w-full max-h-32 bg-black">
+        <source [src]="previewUrl" [type]="getVideoType(previewUrl)">
+      </video>
+      <button 
+        (click)="removeMedia()"
+        class="absolute top-2 right-2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all"
       >
-        <option value="" disabled>Select Feeling</option>
-        <option value="happy">😊 Happy</option>
-        <option value="sad">😢 Sad</option>
-        <option value="excited">😃 Excited</option>
-      </select> -->
-  
-      <!-- Tag Friends Input -->
-      <!-- <input
-        type="text"
-        placeholder="Tag Friends (comma-separated)"
-        [(ngModel)]="postData.taggedFriends"
-        name="taggedFriends"
-        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      /> -->
-  
-      <!-- Action Buttons -->
-      <div class="action-buttons flex space-x-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+      <div class="flex gap-2">
+        <!-- Media Upload Button -->
+        <label class="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg cursor-pointer transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>Media</span>
+          <input 
+            type="file" 
+            (change)="onFileSelected($event)" 
+            accept="image/*,video/*" 
+            class="hidden"
+          >
+        </label>
+
+        <!-- Tag Friends Button -->
         <button
           type="button"
-          class="flex-1 flex items-center justify-center p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200"
+          class="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg transition-colors"
+          
         >
-          <span>Photo / Video</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span>Tag</span>
         </button>
+
+        <!-- Feeling Button -->
         <button
           type="button"
-          class="flex-1 flex items-center justify-center p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200"
+          class="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-lg transition-colors"
+          
         >
-          <span>Tag Friends</span>
-        </button>
-        <button
-          type="button"
-          class="flex-1 flex items-center justify-center p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200"
-        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
           <span>Feeling</span>
         </button>
       </div>
-  
+
       <!-- Submit Button -->
       <button
         type="submit"
-        class="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-200"
+        [disabled]="form.invalid && !previewUrl"
+        class="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg"
       >
         Post
       </button>
-    </form>
-  </div>
+    </div>
+  </form>
+</div>

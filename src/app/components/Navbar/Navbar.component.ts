@@ -49,7 +49,10 @@ export class NavbarComponent implements OnInit {
   grades: any;
   subjectslist: any;
 
+  // isGradeOpen: { [key: number]: boolean } = {};
+
   constructor(private apiservice: ApiService,private router:Router,public dialog: MatDialog ) { }
+
 
   ngOnInit() {
     // this.loggedInUser = localStorage.getItem('loggedInUser');
@@ -60,7 +63,7 @@ export class NavbarComponent implements OnInit {
     this.apiservice.getCurrentUser().subscribe(
       response => {
         this.currentUser = response;
-        console.log(this.currentUser)
+        // console.log(this.currentUser)
       },
       error => {
         console.error('Error:', error);
@@ -85,7 +88,7 @@ export class NavbarComponent implements OnInit {
     this.apiservice.getGrades().subscribe(
       response => {
         this.grades = response;
-        console.log("MySchool Grades", this.grades)
+        // console.log("MySchool Grades", this.grades)
       },
       error => {
         console.error('Error:', error);
@@ -122,5 +125,17 @@ export class NavbarComponent implements OnInit {
         data: { }  // Pass the current announcement to the modal
       });
     }
+    // Add these to your component
+
+
+    gradeStates: { [key: number]: boolean } = {};
+
+  toggleGrade(gradeId: number): void {
+    this.gradeStates[gradeId] = !this.gradeStates[gradeId];
+  }
+
+  isGradeOpen(gradeId: number): boolean {
+    return !!this.gradeStates[gradeId];
+  }
 
 }

@@ -48,7 +48,7 @@ export class ViewAnnouncementComponent implements OnInit {
             description: this.sanitizedDescription
           };
         }
-        console.log('Announcement Data:', this.announcement);
+        // console.log('Announcement Data:', this.announcement);
       });
     } else {
       console.error('No announcement ID found in the route.');

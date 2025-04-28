@@ -1,85 +1,178 @@
 <app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
-<section class="">
-  <section
-    class="bg-gray-200 h-[400px] bg-[url('https://api.travelfind.me/v1/images/site/c66224c5-e632-44e7-b486-5b696fa7a08d')]">
 
-  </section>
-  <div>
-    <div class="max-w-[1250px] min-h-screen mx-auto p-4 bg-white rounded-lg relative -mt-[200px]">
-            <!-- CREATE POST -->
-            <div class="flex justify-between bg-[#121a36] rounded-lg p-2">
-              <!-- <div *ngIf="view.currentUser != null" class="flex justify-between p-2"> -->
-              <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-gray-300 rounded-md">
-                  <img class="rounded-md"
-                    src="https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg" />
-                </div>
-                <!-- <h3 class="uppercase text-gray-200">{{ view.currentUser.first_name }} {{ view.currentUser.last_name }}</h3> -->
-              </div>
-              <button (click)="createAnnoucement()" class="bg-green-500 px-4 rounded-lg text-gray-100">
-                Create Announcement
-              </button>
-              <!-- <i class="fa text-gray-200 text-xl pt-2 cursor-pointer" [ngClass]="isCollapsed ? 'fa-plus-square-o' : 'fa-times'"  aria-hidden="true"></i> -->
-            </div>
-            <div class="collapse" id="collapsiblecreatepost" [ngClass]="{ show: !isCollapsed }">
-              <div class="bg-white shadow-md rounded-lg">
-                <form class="flex flex-col gap-2" (ngSubmit)="onAnnoucementSubmit(announcementForm)"
-                  #announcementForm="">
-                  <input class="p-2 border rounded bg-gray-100" placeholder="Type your title..." id="title" name="title"
-                    ngModel required />
-                  <textarea class="p-2 border rounded bg-gray-100" placeholder="Type your message here ..."
-                    id="description" name="description" ngModel required></textarea>
-                  <div class="flex justify-end">
-                    <button type="submit" class="w-24 text-sm px-3 py-2 bg-green-500 text-white rounded">Post</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <!-- ANNOUNCEMENTS LIST -->
-            <div class="flex flex-wrap justify-center gap-2">
-              <div *ngFor="let post of announcements; let i = index" 
-                class="bg-white shadow-sm rounded-lg w-[400px] border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <!-- Image Section -->
-                <div class="h-52 relative">
-                  <img class="w-full h-full object-cover" [src]="'https://res.cloudinary.com/dzpr6z2z5/' + (post.image || 'https://picsum.photos/seed/' + i + '/200/300')" 
-                  alt="Blog Image" />
-                </div>
-                <!-- Content Section -->
-                <div class="p-4">
-                  <!-- Source and Timestamp -->
-                  <div class="text-sm text-gray-500 flex items-center gap-2 mb-2">
-                    <div class="flex flow-row">
-                      <img src='https://i.pravatar.cc/100' class="w-6 h-6 rounded-full">
-                      <span class="font-semibold  pl-2 ">{{ post.user.first_name }} {{ post.user.last_name }} </span>
-                    </div>
-                    •
-                    <span class="text-sm ">{{ post.datecreated | lastSeen }}</span>
-                  </div>
-                  <!-- Title -->
-                  <h4 class="text-lg font-bold text-gray-900 mb-2" (click)="viewAnnouncement(post)">
-                    {{ post.title }}
-                  </h4>
-                  <!-- <p class="line-clamp-4 text-gray-700 mb-4 cursor-pointer" (click)="viewAnnouncement(item)">
-                    {{ item.description }}
-                  </p> -->
-                  <!-- Engagement Actions -->
-                  <div class="flex justify-between items-center text-gray-600 text-sm">
-                    <div class="flex items-center gap-4">
-                      <span class="flex items-center gap-2 cursor-pointer" (click)="likePost(post)">
-                        <i class="fa fa-thumbs-up" [ngClass]="{'text-red-500': post.user_has_liked}"></i> {{ post.like_count }}
-                      </span>
-                      <span class="flex items-center gap-2"><i class="fa fa-comment"></i>{{ post.comment_count }}</span>
-                    </div>
-                    <span class="flex items-center"><i class="fa fa-fire"></i> Trending</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+<section class="relative">
+  <!-- Hero Banner with Gradient Overlay -->
+  <div class="relative h-96 w-full overflow-hidden">
+    <img 
+      src="https://www.shutterstock.com/image-photo/female-hands-holding-stack-magazines-600nw-2291289343.jpg" 
+      alt="Announcements background"
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-[#121a36] to-transparent"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+      <h1 class="text-4xl font-bold text-white mb-4">Community Articles</h1>
+      <p class="text-xl text-gray-200 max-w-3xl">Stay updated with the latest news, events, and important information</p>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+    <!-- Create Announcement Card -->
+    <div class="rounded-xl shadow-lg overflow-hidden mb-8">
+      <div class="flex justify-between items-center bg-[#121a36] p-4">
+        <div class="flex items-center space-x-3">
+          <!-- <img 
+            class="w-10 h-10 rounded-md object-cover"
+            src="https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg" 
+            alt="User profile"
+          />
+          <h3 class="text-gray-200 font-medium">Create New Announcement</h3> -->
+        </div>
+        <button 
+          (click)="createAnnoucement()" 
+          class="flex items-center space-x-1 bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-white transition-colors"
+        >
+          <mat-icon class="!text-lg">add</mat-icon>
+          <span>Create Article</span>
+        </button>
+      </div>
+
+
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-16">
+      <div class="flex flex-col items-center space-y-3">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
+        <p class="text-gray-600">Loading announcements...</p>
+      </div>
+    </div>
+
+    <!-- Announcements Grid -->
+    <div *ngIf="!isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <div 
+        *ngFor="let post of announcements; let i = index" 
+        class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col"
+      >
+        <!-- Image Section -->
+        <div class="relative h-56 overflow-hidden group">
+          <img 
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+            [src]="'https://picsum.photos/seed/' + i + '/800/600'" 
+            alt="{{post.title}}" 
+          />
+          
+          <!-- Overlay with View Button -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <button 
+              (click)="viewAnnouncement(post)" 
+              class="px-4 py-2 bg-white text-gray-800 rounded-lg hover:bg-gray-100 transition-colors flex items-center space-x-2 shadow-md"
+            >
+              <mat-icon class="!text-lg">visibility</mat-icon>
+              <span>View Details</span>
+            </button>
           </div>
         </div>
-        <div class="h-16">
+
+        <!-- Content Section -->
+        <div class="p-5 flex-1 flex flex-col">
+          <!-- Author and Date -->
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-3">
+              <img 
+                src='https://i.pravatar.cc/150?img={{i}}' 
+                class="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm"
+              />
+              <div>
+                <p class="text-sm font-medium text-gray-900">
+                  {{ post.user.first_name }} {{ post.user.last_name }}
+                </p>
+                <p class="text-xs text-gray-500 flex items-center space-x-1">
+                  <mat-icon class="!text-xs !h-3 !w-3">schedule</mat-icon>
+                  <span>{{ post.datecreated | lastSeen }}</span>
+                </p>
+              </div>
+            </div>
+            <span *ngIf="i % 3 === 0" class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-medium flex items-center space-x-1">
+              <mat-icon class="!text-xs !h-3 !w-3">whatshot</mat-icon>
+              <span>Trending</span>
+            </span>
+          </div>
+
+          <!-- Title and Description -->
+          <div (click)="viewAnnouncement(post)" class="cursor-pointer mb-4 flex-1">
+            <h3 class="text-lg font-bold text-gray-800 mb-2 hover:text-blue-600 transition-colors line-clamp-2">
+              {{ post.title }}
+            </h3>
+            <!-- <p class="text-gray-600 text-sm line-clamp-3">
+              {{ post.description }}
+            </p> -->
+          </div>
+
+          <!-- Engagement Actions -->
+          <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+            <div class="flex items-center space-x-4">
+              <button 
+                class="flex items-center text-gray-500 space-x-1 hover:text-blue-600 focus:outline-none transition-colors"
+                aria-label="Like this post"
+              >
+                <mat-icon [class.text-blue-500]="post.user_has_liked" class="!text-lg">
+                  {{ post.user_has_liked ? 'thumb_up' : 'thumb_up_off_alt' }}
+                </mat-icon> 
+                <span class="text-sm">{{ post.like_count }}</span>
+              </button>
+              <span class="flex items-center text-gray-500 space-x-1">
+                <mat-icon class="!text-lg">comment</mat-icon>
+                <span class="text-sm">{{ post.comment_count }}</span>
+              </span>
+            </div>
+            
+            <button 
+              class="text-gray-400 hover:text-gray-600 transition-colors"
+              [matMenuTriggerFor]="postMenu"
+            >
+              <mat-icon class="!text-lg">more_vert</mat-icon>
+            </button>
+            
+            <mat-menu #postMenu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>bookmark</mat-icon>
+                <span>Save</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>share</mat-icon>
+                <span>Share</span>
+              </button>
+              <!-- <button *ngIf="isAdmin" mat-menu-item class="text-red-500">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button> -->
+            </mat-menu>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && announcements.length === 0" class="text-center py-16">
+      <mat-icon class="!text-5xl !w-16 !h-16 text-gray-300 mb-4">announcement</mat-icon>
+      <h3 class="text-xl font-medium text-gray-600 mb-2">No announcements yet</h3>
+      <p class="text-gray-500 max-w-md mx-auto">Be the first to create an announcement and share important information with the community</p>
+      <button 
+        (click)="createAnnoucement()" 
+        class="mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors inline-flex items-center space-x-1"
+      >
+        <mat-icon class="!text-lg">add</mat-icon>
+        <span>Create Announcement</span>
+      </button>
+    </div>
+  </div>
 </section>
-<div class="p-12 bg-[#121a36]">
-  <app-timeline></app-timeline>
-</div>
+
+<!-- Timeline Section -->
+<section class="bg-[#121a36] py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-2xl font-bold text-white mb-8 text-center">Recent Activity Timeline</h2>
+    <app-timeline></app-timeline>
+  </div>
+</section>

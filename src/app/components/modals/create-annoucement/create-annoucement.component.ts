@@ -1,11 +1,11 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule ,NgForm } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule ,NgForm, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { QuillModule } from 'ngx-quill';
-import Quill from 'quill';
+import { QuillConfig, QuillModule } from "ngx-quill";
+import * as Quill from "quill";
 import { ApiService } from '../../../services/api.service';
 
 
@@ -19,15 +19,9 @@ import { ApiService } from '../../../services/api.service';
 })
 export class CreateAnnoucementComponent{
 
-  announcement: { title: string; description: string; image: File | null; video: File | null } = {
-    title: '',
-    description: '',
-    image: null,
-    video: null,
-  };
-
   modules = {
     formula: true,
+    syntax: true,
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }], // Added more header levels
       ['bold', 'italic', 'underline', 'strike'], // Added 'strike' for strikethrough
@@ -45,143 +39,55 @@ export class CreateAnnoucementComponent{
     }
   };
 
-  searchQuery: string = '';
-  tagged = { taggedFriends: [] };
-  tagInput: string = '';
+  announcementForm = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]) // Add required validator
+  });
 
-  post = {
-    title : '',
-    content: '',
-    tags: [] as string[],
-    image: null,
-    video: null,
-    taggedFriends: [],
-    feeling: '',
-    imagePreview: '',
-    videoPreview: '',
-  };
-
-  friends = [
-    { id: 1, name: 'John Doe', profilePicture: 'https://i.pravatar.cc/100?u=1' },
-    { id: 2, name: 'Jane Smith', profilePicture: 'https://i.pravatar.cc/100?u=2' },
-    { id: 3, name: 'Alice Johnson', profilePicture: 'https://i.pravatar.cc/100?u=3' },
-    { id: 4, name: 'Bob Brown', profilePicture: 'https://i.pravatar.cc/100?u=4' },
-    { id: 5, name: 'Charlie Davis', profilePicture: 'https://i.pravatar.cc/100?u=5' },
-  ];
-  http: any;
+  selectedFile: File | null = null;
+  uploadProgress: number | null = null;
 
   constructor(
+    private apiService: ApiService,
     public dialogRef: MatDialogRef<CreateAnnoucementComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,private apiService: ApiService
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  // onSubmit(): void {
-  //   if (this.post.content) {
-  //     this.dialogRef.close(this.post);
-  //   }
-  // }
-  
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0] as File;
+  }
 
-  onVideoSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.post.video = file;
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.post.videoPreview = reader.result as string;
-      };
-      reader.readAsDataURL(file);
+
+  onSubmit(): void {
+    if (this.announcementForm.invalid) {
+      // Mark all fields as touched to show validation messages
+      this.announcementForm.markAllAsTouched();
+      return;
     }
-  }
-  filteredFriends = [...this.friends];
-  // Function to filter friends based on search query
-  onFriendsFilterChange(event: any) {
-    this.searchQuery = event.target.value.toLowerCase();
-    this.filterFriends();
-  }
-  filterFriends() {
-    const query = this.searchQuery.toLowerCase();
-    this.filteredFriends = this.friends.filter(friend =>
-      friend.name.toLowerCase().includes(query)
-    );
+  
+    const formData = new FormData();
+    formData.append('title', this.announcementForm.get('title')?.value || '');
+    formData.append('description', this.announcementForm.get('description')?.value || '');
+  
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+    }
+  
+    this.apiService.create_announcement(formData).subscribe({
+      next: (response) => {
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        console.error('Error creating announcement:', error);
+        // Handle error appropriately
+      }
+    });
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
-  addTag() {
-    if (this.tagInput.trim() && !this.post.tags.includes(this.tagInput.trim())) {
-      this.post.tags.push(this.tagInput.trim()); // ✅ No more TypeScript error
-      this.tagInput = ''; // Clear input field
-    }
-  }
-
-  removeTag(index: number) {
-    this.post.tags.splice(index, 1);
-  }
-  // onAnnoucementSubmit(form: NgForm) {
-  //   if (form.valid) {
-  //     const formData = new FormData();
-  //     formData.append('title', this.announcement.title);
-  //     formData.append('description', this.announcement.description);
-  //     if (this.announcement.image) {
-  //       formData.append('image', this.announcement.image);
-  //     }
-  //     if (this.announcement.video) {
-  //       formData.append('video', this.announcement.video);
-  //     }
-
-  //     this.apiService.create_announcement(formData).subscribe(
-  //       (response) => {
-  //         console.log('Announcement posted successfully:', response);
-  //         form.resetForm();
-  //         this.announcement = { title: '', description: '', image: null, video: null };
-  //         this.dialogRef.close();
-  //       },
-  //       (error) => {
-  //         console.error('Announcement posting failed:', error);
-  //       }
-  //     );
-  //   }
-  // }
-
-  onFileSelected(event: any, type: string) {
-    const file = event.target.files[0];
-    if (file && type === 'image') {
-      this.announcement.image = file;
-    }
-  }
-  // onFileSelected(event: any, type: string) {
-  //   const file = event.target.files[0];
-  //   if (type === 'image') {
-  //     this.post.image = file;
-  //   } else if (type === 'video') {
-  //     this.post.video = file;
-  //   }
-  // }
-  onSubmit(postForm: NgForm) {
-    if (postForm.valid) {
-      const formData = new FormData();
-      formData.append('title', this.announcement.title);
-      formData.append('description', this.announcement.description);
-      
-      if (this.announcement.image) {
-        formData.append('image', this.announcement.image);
-      }
   
-      this.apiService.create_announcement(formData).subscribe(
-        (response) => {
-          console.log('Announcement posted successfully:', response);
-          postForm.resetForm(); // Reset the form
-          this.announcement = { title: '', description: '', image: null, video: null };
-          this.dialogRef.close();
-        },
-        (error) => {
-          console.error('Announcement posting failed:', error);
-        }
-      );
-    }
-  }
   quillEditor: any;
   uploadImage() {
     const input = document.createElement('input');

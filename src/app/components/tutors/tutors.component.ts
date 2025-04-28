@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import {faChalkboardUser,faBookOpenReader } from '@fortawesome/free-solid-svg-icons';
 import { ApiService } from '../../services/api.service';
@@ -10,6 +10,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TimelineComponent } from "../timeline/timeline.component";
 import { NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Title, Meta } from '@angular/platform-browser';
+
 
 // import { ApiService } from 'src/app/services/api.service';
 
@@ -17,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-tutors',
   templateUrl: './tutors.component.html',
   styleUrls: ['./tutors.component.css'],
-  imports: [PagetiltleComponent, CarouselModule, FontAwesomeModule, TimelineComponent,NgFor,MatIconModule],
+  imports: [PagetiltleComponent, CarouselModule, FontAwesomeModule, TimelineComponent,NgFor,MatIconModule,RouterLink],
   standalone:true,
 })
 export class TutorsComponent implements OnInit {
@@ -33,27 +35,50 @@ export class TutorsComponent implements OnInit {
   students: any;
 
 
-  constructor(private apiservice: ApiService, private router:Router) { }
+  constructor(private apiservice: ApiService, private router:Router,private titleService: Title,private metaService: Meta) { }
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Tutoring', active: true }];
     this.getTutors();
+
+    
+  // Set SEO Title
+  this.titleService.setTitle('Find Top Tutors | Tutoring Services | MySchool');
+
+  // Set SEO Meta Description
+  this.metaService.updateTag({
+    name: 'description',
+    content: 'Discover top tutors and educational institutions offering tutoring services to help you excel. Find the best match for your academic needs.'
+  });
+
+  // Optionally add keywords (though not as important today)
+  this.metaService.updateTag({
+    name: 'keywords',
+    content: 'Tutors, Tutoring, Education, Institutions, Private Tutor, Study Help'
+  });
+
+  // Open Graph Tags for social media sharing (optional)
+  this.metaService.updateTag({
+    property: 'og:title',
+    content: 'Find Top Tutors | YourSiteName'
+  });
+  this.metaService.updateTag({
+    property: 'og:description',
+    content: 'Discover top tutors and institutions offering tutoring services tailored to your needs.'
+  });
+  this.metaService.updateTag({
+    property: 'og:type',
+    content: 'website'
+  });
+
 
   }
   openTutors(){
     this.router.navigate(['/tutors']);
   }
     getTutors = () => {
-    this.apiservice.getAllUsers().subscribe(
+    this.apiservice.getAllTutors().subscribe(
       (data) => {
-        this.institutions = data.filter((user: { occupation: string; }) => user.occupation === 'Institution');
-        console.log(this.institutions);
-        this.tutors = data.filter((user: { occupation: string; }) => user.occupation === 'Tutor');
-        this.tutorlist = this.tutors.slice(0, 4);
-        console.log(this.tutorlist);
-        console.log(this.tutors);
-        this.students = data.filter((user: { occupation: string; }) => user.occupation === 'Student'); 
-        console.log(this.students);
         this.members = data;
         console.log(this.members);
       },

@@ -1,12 +1,20 @@
 <app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
 <section class="bg-[#121a36]">
-    <section
-        class="bg-gray-200 h-[400px] bg-[url('https://api.travelfind.me/v1/images/site/c66224c5-e632-44e7-b486-5b696fa7a08d')]">
-
+    <section>
+      <div class="relative h-56 w-full overflow-hidden">
+        <img 
+          src="https://www.shutterstock.com/image-photo/online-digital-e-invoice-statements-260nw-1754977274.jpg" 
+          alt="Announcements background"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#121a36] to-transparent"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+          
+        </div>
+      </div>
     </section>
     <!-- <div> -->
-        <div
-            class="max-w-[1250px] mx-auto bg-gray-100 background-image rounded-lg relative -mt-[200px]">
+        <div class="max-w-[1300px] mx-auto bg-gray-100 background-image rounded-lg relative -mt-12">
             <div class="flex h-[700px] bg-gray-100 rounded-lg ">
                 <!-- Recent Chats Section -->
                 <div class="w-1/4 bg-white border-r border-gray-200">
@@ -21,6 +29,6 @@
         </div>
     <!-- </div> -->
 </section>
-<div class="p-8 bg-[#121a36]">
+<div class="p-12 bg-[#121a36]">
     <app-timeline></app-timeline>
   </div>

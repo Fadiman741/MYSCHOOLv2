@@ -1,41 +1,85 @@
-<app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
+<app-pagetiltle
+  title="ANNOUNCEMENTS"
+  [breadcrumbItems]="breadCrumbItems"
+></app-pagetiltle>
 <section class="bg-white">
-  <section *ngIf="announcement"
-    class="bg-gray-200 h-[400px] bg-[#141c3c]">
-    <div class="max-w-[1250px] mx-auto">
-      <h1 class="text-4xl text-[#141c3c] font-bold leading-tight pt-6">{{ announcement.title }}</h1>
-      <div class="pt-4 flex items-center space-x-4">
-        <img [src]="announcement.image || 'https://i.pravatar.cc/100'" alt="Author" class="w-12 h-12 rounded-full">
-        <div>
-            <p class="text-md text-gray-400">Written by <span class="text-blue-400 font-semibold">{{ announcement.user.first_name }} {{ announcement.user.last_name }}</span></p>
-            <p class="text-sm text-gray-500">Published on  {{ announcement.datecreated | lastSeen }}</p>
+  <section *ngIf="announcement">
+    <div class="relative h-96 w-full overflow-hidden">
+      <img 
+        src="https://www.shutterstock.com/image-photo/online-digital-e-invoice-statements-260nw-1754977274.jpg" 
+        alt="Announcements background"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#121a36] to-transparent"></div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+        <div class="max-w-[1250px] mx-auto">
+          <h1 class="text-5xl text-[#141c3c] font-bold text-left leading-tight pt-6">
+            {{ announcement.title }}
+          </h1>
+          <div class="pt-4 flex items-center space-x-4">
+            <img
+              [src]="announcement.image || 'https://i.pravatar.cc/100'"
+              alt="Author"
+              class="w-12 h-12 rounded-full"
+            />
+            <div>
+              <p class="text-md text-gray-400">
+                Written by
+                <span class="text-blue-400 font-semibold"
+                  >{{ announcement.user.first_name }}
+                  {{ announcement.user.last_name }}</span
+                >
+              </p>
+              <p class="text-sm text-gray-500">
+                Published on {{ announcement.datecreated | lastSeen }}
+              </p>
+            </div>
+          </div>
+          <div class="mt-4 flex space-x-4">
+            <button
+              class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center"
+              (click)="likePost(announcement)"
+            >
+              <span
+                class="material-icons text-[16px]"
+                [ngClass]="
+                  announcement.user_has_liked ? 'text-red-500' : 'text-gray-400'
+                "
+              >
+                {{ announcement.user_has_liked ? "favorite" : "favorite_border" }}
+              </span>
+            </button>
+            <button
+              class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center"
+            >
+              <span class="material-icons text-[16px] text-gray-400"
+                >chat_bubble_outline</span
+              >
+            </button>
+            <button
+              class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center"
+            >
+              <span class="material-icons text-[16px] text-gray-400">share</span>
+            </button>
+            <button
+              class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center"
+            >
+              <!-- <span class="material-icons text-[16px] text-gray-400">linkedin</span> -->
+            </button>
+          </div>
         </div>
       </div>
-      <div class="mt-4 flex  space-x-4">
-        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center" 
-                (click)="likePost(announcement)">
-            <span class="material-icons text-[16px]" 
-                  [ngClass]="announcement.user_has_liked ? 'text-red-500' : 'text-gray-400'">
-                {{ announcement.user_has_liked ? 'favorite' : 'favorite_border' }}
-            </span>
-        </button>
-        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center">
-            <span class="material-icons text-[16px] text-gray-400">chat_bubble_outline</span>
-        </button>
-        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center">
-            <span class="material-icons text-[16px] text-gray-400">share</span>
-        </button>
-        <button class="p-1 w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center">
-            <!-- <span class="material-icons text-[16px] text-gray-400">linkedin</span> -->
-        </button>
     </div>
-    </div>
-
   </section>
+
   <div>
-    <div class="max-w-[1250px] p-4 min-h-[400px] mx-auto p-4 bg-white rounded-lg relative -mt-[200px]">
+    <div
+      class="max-w-[1250px] p-4 min-h-[400px] mx-auto p-4 bg-white rounded-lg relative -mt-12"
+    >
       <div class="">
-        <div class="flex items-center justify-between w-full bg-white rounded-lg shadow-md">
+        <div
+          class="flex items-center justify-between w-full bg-white rounded-lg shadow-md"
+        >
           <!-- Profile Image -->
           <!-- <div class="w-36 h-36 rounded-lg overflow-hidden">
             <img
@@ -62,167 +106,284 @@
             <p class="text-gray-600"><strong>Location:</strong> {{ announcement.user.location || 'Not specified' }}</p>
 
           </div> -->
-
-
-
         </div>
         <div>
-          <div >
+          <div>
             <div class="flex flex-row justify-between">
-              <p class="text-gray-500 text-sm">
-              </p>
-              <!-- Action Icons (Edit & Delete) -->
-            <div class="flex justify-end text-right ">
-              <!-- Dropdown Trigger (More Icon) -->
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon class="text-gray-600 cursor-pointer hover:text-blue-500">more_vert</mat-icon>
-              </button>
+              <p class="text-gray-500 text-sm"></p>
+              <!-- Action Menu -->
+              <div class="relative">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="actionMenu"
+                  aria-label="Announcement actions"
+                  class="text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
 
-              <!-- Dropdown Menu -->
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="editItem(announcement.id)">
-                  <mat-icon class="text-blue-500">edit</mat-icon>
-                  <span>Edit</span>
-                </button>
-                <button mat-menu-item (click)="onDeleteAnnouncement(announcement.id)">
-                  <mat-icon class="text-red-600">delete</mat-icon>
-                  <span>Delete</span>
-                </button>
-              </mat-menu>
-            </div>
+                <mat-menu #actionMenu="matMenu" xPosition="before">
+                  <button
+                    mat-menu-item
+                    (click)="editItem(announcement.id)"
+                    class="flex items-center gap-2"
+                  >
+                    <mat-icon class="text-blue-600 dark:text-blue-400"
+                      >edit</mat-icon
+                    >
+                    <span>Edit</span>
+                  </button>
+                  <button
+                    mat-menu-item
+                    (click)="onDeleteAnnouncement(announcement.id)"
+                    class="flex items-center gap-2 text-red-600 dark:text-red-400"
+                  >
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
             </div>
             <!-- <h4 style="text-transform: uppercase">{{ announcement.title }}</h4> -->
             <!-- <div [innerHTML]="announcement.description" class="max-w-full "></div> -->
-             <div class="prose lg:prose-lg prose-gray max-w-none">
+            <div class="prose lg:prose-lg prose-gray max-w-none">
               <!-- <p>{{announcement.description}}</p> -->
               <!-- <div [innerHTML]="announcement.description"></div> -->
-             </div>
-            <div class="prose lg:prose-lg prose-gray max-w-none">
-              <quill-view-html  [content]="sanitizedDescription"></quill-view-html>
+            </div>
+            <!-- Rich Text Content -->
+            <div
+              class="prose max-w-none dark:prose-invert prose-gray prose-p:my-2 prose-headings:my-3 prose-ul:my-2 prose-ol:my-2 prose-a:text-blue-600 hover:prose-a:text-blue-800 dark:prose-a:text-blue-400 dark:hover:prose-a:text-blue-300"
+            >
+              <quill-view-html
+                [content]="sanitizedDescription"
+              ></quill-view-html>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <section class="max-w-[1250px] mx-auto p-4 bg-white rounded-lg mt-6">
-    <h2 class="text-2xl font-bold text-[#141c3c] mb-4">Comments</h2>
-  
+  <section
+    class="max-w-[1250px] mx-auto p-6 bg-white rounded-xl shadow-sm mt-6"
+  >
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">
+      Comments ({{ announcement.comments?.length || 0 }})
+    </h2>
+
     <!-- Comment Input Box -->
-    <div class="mb-6">
-      <textarea
-        [(ngModel)]="newComment"
-        placeholder="Write a comment..."
-        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        rows="3"
-      ></textarea>
-      <button
-        (click)="addComment()"
-        class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-      >
-        Post Comment
-      </button>
+    <div class="mb-8 bg-gray-100 p-4 rounded-xl">
+      <div class="flex items-start gap-4">
+        <img
+          [src]="'https://i.pravatar.cc/100'"
+          alt="Your profile"
+          class="w-10 h-10 rounded-full object-cover border border-gray-200"
+        />
+        <div class="flex-1">
+          <textarea
+            [(ngModel)]="newComment"
+            placeholder="Share your thoughts..."
+            class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            rows="3"
+          ></textarea>
+          <div class="flex justify-end mt-2">
+            <button
+              (click)="addComment()"
+              [disabled]="!newComment.trim()"
+              class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+            >
+              <mat-icon class="!text-lg">send</mat-icon>
+              Post Comment
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  
-    <!-- Display Comments -->
-    <!-- Display Comments -->
-<div *ngFor="let comment of announcement.comments" class="mb-6">
-  <div class="flex items-start space-x-4">
-    <!-- Comment Author Image -->
-    <img
-      [src]="comment.user.profile_picture || 'https://i.pravatar.cc/100'"
-      alt="Comment Author"
-      class="w-10 h-10 rounded-full"
-    />
 
-    <!-- Comment Content -->
-    <div class="flex-1">
-      <div class="bg-gray-100 p-4 rounded-lg">
-        <p class="font-semibold text-[#141c3c]">
-          {{ comment.user.first_name }} {{ comment.user.last_name }}
-        </p>
-        <p class="text-gray-700">{{ comment.content }}</p>
-        <p class="text-sm text-gray-500 mt-2">
-          {{ comment.created_at | lastSeen }}
-        </p>
-      </div>
-      <div class="flex">
-        <!-- Like Button for Comment -->
-        <button (click)="likeComment(comment.id)"  class="mt-2 text-md text-blue-500 hover:text-blue-600 px-2 flex items-center space-x-1 transition-colors duration-200">
-          <span class="material-icons">
-            {{ comment.user_has_liked ? 'favorite' : 'favorite_border' }}
-          </span>
-          <span>{{ comment.like_count }} Likes</span>
-        </button>
-        <!-- Reply Button -->
-        <button (click)="toggleReply(comment.id)" class="mt-2 text-md text-blue-500 hover:text-blue-600 px-2">
-          {{ showReplyBox === comment.id ? 'Cancel' : 'Reply' }}
-        </button>
-       
-        <!-- Toggle Replies Button -->
-        <button
-          (click)="toggleReplies(comment.id)" class="mt-2 text-md text-blue-500 hover:text-blue-600" >
-          {{ showReplies === comment.id ? 'Hide Replies' : 'Show Replies' }} ({{ comment.replies.length }})
-        </button>
-      </div>
-      <!-- Reply Input Box (Visible when toggled) -->
-      <div *ngIf="showReplyBox === comment.id" class="mt-4 w-full">
-        <textarea
-          [(ngModel)]="newReply"
-          placeholder="Write a reply..."
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows="2"
-        ></textarea>
-        <button  (click)="addReply(comment.id)"  class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-          Post Reply
-        </button>
-      </div>
-      
+    <!-- Comments List -->
+    <div class="space-y-6">
+      <div
+        *ngFor="let comment of announcement.comments"
+        class="comment-container"
+      >
+        <!-- Main Comment -->
+        <div class="flex gap-4">
+          <!-- User Avatar -->
+          <img
+            [src]="comment.user.profile_picture || 'https://i.pravatar.cc/100'"
+            alt="Comment author"
+            class="w-10 h-10 rounded-full object-cover border border-gray-200 flex-shrink-0"
+          />
 
-      
-
-      <!-- Display Replies (Visible when toggled) -->
-      <div *ngIf="showReplies === comment.id">
-        <div *ngFor="let reply of comment.replies" class="ml-8 mt-4">
-          <div class="flex items-start space-x-4">
-            <!-- Reply Author Image -->
-            <img
-              [src]="reply.user.profile_picture || 'https://i.pravatar.cc/100'"
-              alt="Reply Author"
-              class="w-8 h-8 rounded-full"
-            />
-
-            <!-- Reply Content -->
-            <div class="flex-1">
-              <div class="bg-gray-100 p-3 rounded-lg">
-                <p class="font-semibold text-[#141c3c]">
-                  {{ reply.user.first_name }} {{ reply.user.last_name }}
-                </p>
-                <p class="text-gray-700">{{ reply.content }}</p>
-                <p class="text-sm text-gray-500 mt-2">
-                  {{ reply.created_at | lastSeen }}
-                </p>
+          <!-- Comment Content -->
+          <div class="flex-1">
+            <div class="bg-gray-100 p-4 rounded-xl">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-semibold text-gray-800">
+                    {{ comment.user.first_name }} {{ comment.user.last_name }}
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                    <mat-icon class="!text-xs !h-3 !w-3">schedule</mat-icon>
+                    {{ comment.created_at | lastSeen }}
+                  </p>
+                </div>
+                <!-- <button *ngIf="comment.user.id === currentUser?.id" 
+                        (click)="deleteComment(comment.id)"
+                        class="text-gray-400 hover:text-red-500 transition-colors">
+                  <mat-icon class="!text-base">delete</mat-icon>
+                </button>-->
               </div>
 
-              <!-- Like Button for Reply -->
-              <button
-                (click)="likeReply(reply.id)"
-                class="mt-2 text-sm text-blue-500 hover:text-blue-600"
+              <p class="text-gray-700 mt-2 whitespace-pre-line">
+                {{ comment.content }}
+              </p>
+
+              <!-- Comment Actions -->
+              <div
+                class="flex items-center gap-4 mt-3 pt-3 border-t border-gray-100"
               >
-                <span class="material-icons">
-                  {{ reply.user_has_liked ? 'favorite' : 'favorite_border' }}
-                </span>
-                {{ reply.like_count }} Likes
-              </button>
+                <button
+                  (click)="likeComment(comment.id)"
+                  class="flex items-center gap-1 text-sm font-medium hover:text-blue-600 transition-colors"
+                  [class.text-blue-600]="comment.user_has_liked"
+                >
+                  <mat-icon class="!text-base">{{
+                    comment.user_has_liked ? "favorite" : "favorite_border"
+                  }}</mat-icon>
+                  <span>{{ comment.like_count || 0 }}</span>
+                </button>
+
+                <button
+                  (click)="toggleReply(comment.id)"
+                  class="flex items-center gap-1 text-sm font-medium hover:text-blue-600 transition-colors"
+                >
+                  <mat-icon class="!text-base">reply</mat-icon>
+                  <span>{{
+                    showReplyBox === comment.id ? "Cancel" : "Reply"
+                  }}</span>
+                </button>
+
+                <button
+                  *ngIf="comment.replies.length > 0"
+                  (click)="toggleReplies(comment.id)"
+                  class="flex items-center gap-1 text-sm font-medium hover:text-blue-600 transition-colors"
+                >
+                  <mat-icon class="!text-base">{{
+                    showReplies === comment.id ? "expand_less" : "expand_more"
+                  }}</mat-icon>
+                  <span
+                    >{{
+                      showReplies === comment.id
+                        ? "Hide replies"
+                        : "Show replies"
+                    }}
+                    ({{ comment.replies.length }})</span
+                  >
+                </button>
+              </div>
+            </div>
+
+            <!-- Reply Input Box -->
+            <div *ngIf="showReplyBox === comment.id" class="mt-4 pl-4">
+              <div class="flex gap-4">
+                <img
+                  [src]="'https://i.pravatar.cc/100'"
+                  alt="Your profile"
+                  class="w-8 h-8 rounded-full object-cover border border-gray-200"
+                />
+                <div class="flex-1">
+                  <textarea
+                    [(ngModel)]="newReply"
+                    placeholder="Write your reply..."
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    rows="2"
+                  ></textarea>
+                  <div class="flex justify-end gap-2 mt-2">
+                    <button
+                      (click)="toggleReply(comment.id)"
+                      class="px-4 py-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      (click)="addReply(comment.id)"
+                      [disabled]="!newReply.trim()"
+                      class="px-4 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Post Reply
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Replies Section -->
+            <div
+              *ngIf="showReplies === comment.id && comment.replies.length > 0"
+              class="mt-4 pl-4 border-l-2 border-gray-200"
+            >
+              <div *ngFor="let reply of comment.replies" class="mb-4">
+                <div class="flex gap-3">
+                  <img
+                    [src]="
+                      reply.user.profile_picture || 'https://i.pravatar.cc/100'
+                    "
+                    alt="Reply author"
+                    class="w-8 h-8 rounded-full object-cover border border-gray-200"
+                  />
+
+                  <div class="flex-1">
+                    <div class="bg-gray-100 p-3 rounded-lg">
+                      <div class="flex items-center justify-between">
+                        <div>
+                          <p class="font-medium text-gray-800">
+                            {{ reply.user.first_name }}
+                            {{ reply.user.last_name }}
+                          </p>
+                          <p
+                            class="text-xs text-gray-500 mt-1 flex items-center gap-1"
+                          >
+                            <mat-icon class="!text-xs !h-3 !w-3"
+                              >schedule</mat-icon
+                            >
+                            {{ reply.created_at | lastSeen }}
+                          </p>
+                        </div>
+                        <!-- <button *ngIf="reply.user.id === currentUser?.id" 
+                                (click)="deleteReply(reply.id)"
+                                class="text-gray-400 hover:text-red-500 transition-colors">
+                          <mat-icon class="!text-base">delete</mat-icon>
+                        </button> -->
+                      </div>
+
+                      <p class="text-gray-700 mt-1 whitespace-pre-line">
+                        {{ reply.content }}
+                      </p>
+
+                      <div class="mt-2 pt-2 border-t border-gray-100">
+                        <button
+                          (click)="likeReply(reply.id)"
+                          class="flex items-center gap-1 text-xs font-medium hover:text-blue-600 transition-colors"
+                          [class.text-blue-600]="reply.user_has_liked"
+                        >
+                          <mat-icon class="!text-sm">{{
+                            reply.user_has_liked
+                              ? "favorite"
+                              : "favorite_border"
+                          }}</mat-icon>
+                          <span>{{ reply.like_count || 0 }}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
   </section>
-
 </section>
 <div class="p-12 bg-[#121a36]">
   <app-timeline></app-timeline>

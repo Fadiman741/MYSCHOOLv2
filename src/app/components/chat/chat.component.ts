@@ -4,16 +4,17 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
-  imports: [RouterLink,NgFor,FormsModule],
+  imports: [RouterLink,NgFor,FormsModule,MatIcon,NgIf],
   standalone:true,
 })
 export class ChatComponent implements OnInit {

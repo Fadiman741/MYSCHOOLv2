@@ -1,30 +1,142 @@
-<div class="flex flex-col h-full">
+<div class="flex flex-col h-full bg-gray-50">
   <!-- Chat Header -->
-  <div class="p-4 border-b border-gray-200">
-    <h2 class="text-lg font-semibold">John Doe</h2>
+  <div class="p-4 border-b border-gray-200 bg-white flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <img src="https://i.pravatar.cc/150?img=5" alt="Profile" class="w-10 h-10 rounded-full object-cover">
+      <div>
+        <h2 class="font-semibold text-gray-800">John Doe</h2>
+        <p class="text-xs text-gray-500 flex items-center">
+          <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+          Online
+        </p>
+      </div>
+    </div>
+    <div class="flex space-x-2">
+      <button mat-icon-button class="text-gray-500 hover:text-blue-600">
+        <mat-icon>videocam</mat-icon>
+      </button>
+      <button mat-icon-button class="text-gray-500 hover:text-blue-600">
+        <mat-icon>call</mat-icon>
+      </button>
+      <button mat-icon-button class="text-gray-500 hover:text-blue-600">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
   </div>
 
   <!-- Chat Messages -->
-  <div class="flex-1 p-4 overflow-y-auto">
+  <div class="flex-1 p-4 overflow-y-auto space-y-3" #messageContainer>
     <div *ngFor="let message of messages" class="mb-4">
-      <div [ngClass]="{'text-right': message.sender === 'You', 'text-left': message.sender !== 'You'}">
-        <p class="text-sm text-gray-500">{{ message.sender }}</p>
-        <p class="inline-block px-4 py-2 rounded-lg" 
-           [ngClass]="{'bg-blue-500 text-white': message.sender === 'You', 'bg-gray-200': message.sender !== 'You'}">
-          {{ message.text }}
-        </p>
-        <p class="text-xs text-gray-400 mt-1">{{ message.timestamp }}</p>
+      <div [ngClass]="{'flex justify-end': message.sender === 'You', 'flex justify-start': message.sender !== 'You'}">
+        <div class="max-w-xs md:max-w-md lg:max-w-lg">
+          <!-- Message Meta -->
+          <div [ngClass]="{'text-right': message.sender === 'You', 'text-left': message.sender !== 'You'}" 
+               class="mb-1">
+            <span class="text-xs font-medium text-gray-500">{{ message.sender }}</span>
+            <span class="text-xs text-gray-400 mx-2">•</span>
+            <span class="text-xs text-gray-400">{{ message.timestamp |date:'MMM dd, h:mm a' }}</span>
+          </div>
+          
+          <!-- Message Content -->
+          <div [ngClass]="{
+            'bg-blue-600 text-white': message.sender === 'You',
+            'bg-white border border-gray-200': message.sender !== 'You'
+          }" 
+          class="rounded-xl p-3 shadow-sm">
+            <!-- Text Message -->
+            <p *ngIf="message.text" class="whitespace-pre-wrap">{{ message.text }}</p>
+            
+            <!-- Image Message -->
+            <div *ngIf="message.image" class="mt-2 rounded-lg overflow-hidden">
+              <img [src]="message.image" alt="Shared image" 
+                   class="max-h-60 w-auto rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                   (click)="openMediaViewer(message.image)">
+            </div>
+            
+            <!-- File Attachment -->
+            <div *ngIf="message.file" class="mt-2 flex items-center p-2 bg-gray-100 rounded-lg">
+              <mat-icon class="text-gray-500 mr-2">insert_drive_file</mat-icon>
+              <div class="flex-1 truncate">
+                <!-- <p class="text-sm font-medium truncate">{{ message.file.name }}</p>
+                <p class="text-xs text-gray-500">{{ message.file.size }}</p> -->
+              </div>
+              <button mat-icon-button (click)="downloadFile(message.file)">
+                <mat-icon class="text-gray-500">download</mat-icon>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Message Status -->
+          <div *ngIf="message.sender === 'You'" class="flex justify-end items-center mt-1 space-x-1">
+            <mat-icon *ngIf="message.status === 'sent'" class="text-xs text-gray-400">done</mat-icon>
+            <mat-icon *ngIf="message.status === 'delivered'" class="text-xs text-gray-400">done_all</mat-icon>
+            <mat-icon *ngIf="message.status === 'read'" class="text-xs text-blue-500">done_all</mat-icon>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Message Input -->
-  <div class="p-4 border-t border-gray-200">
-    <div class="flex">
-      <input [(ngModel)]="newMessage" type="text" placeholder="Type a message" 
-             class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-      <button (click)="sendMessage()" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-        Send
+  <!-- Message Input with Media Sharing -->
+  <div class="p-3 border-t border-gray-200 bg-white">
+    <!-- Preview Area -->
+    <!-- <div *ngIf="mediaPreview" class="mb-3 relative">
+      <div *ngIf="mediaPreview.type === 'image'" class="relative">
+        <img [src]="mediaPreview.url" alt="Preview" class="max-h-40 rounded-lg">
+        <button (click)="clearMediaPreview()" 
+                class="absolute top-1 right-1 bg-gray-800 bg-opacity-70 text-white rounded-full p-1 hover:bg-opacity-100">
+          <mat-icon class="!text-sm">close</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="mediaPreview.type === 'file'" class="flex items-center p-2 bg-gray-100 rounded-lg">
+        <mat-icon class="text-gray-500 mr-2">insert_drive_file</mat-icon>
+        <div class="flex-1">
+          <p class="text-sm font-medium">{{ mediaPreview.file.name }}</p>
+          <p class="text-xs text-gray-500">{{ mediaPreview.file.size | fileSize }}</p>
+        </div>
+        <button mat-icon-button (click)="clearMediaPreview()">
+          <mat-icon class="text-gray-500">close</mat-icon>
+        </button>
+      </div> 
+    </div>-->
+    
+    <div class="flex items-center">
+      <!-- Media Sharing Buttons -->
+      <div class="flex space-x-1 mr-2">
+        <button mat-icon-button (click)="fileInput.click()">
+          <mat-icon class="text-gray-500 hover:text-blue-600">attach_file</mat-icon>
+          <input #fileInput type="file" hidden (change)="handleFileInput($event)" multiple>
+        </button>
+        <button mat-icon-button (click)="imageInput.click()">
+          <mat-icon class="text-gray-500 hover:text-blue-600">image</mat-icon>
+          <input #imageInput type="file" accept="image/*" hidden (change)="handleImageInput($event)">
+        </button>
+        <button mat-icon-button>
+          <mat-icon class="text-gray-500 hover:text-blue-600">mic</mat-icon>
+        </button>
+      </div>
+      
+      <!-- Message Input -->
+      <div class="flex-1 relative">
+        <textarea [(ngModel)]="newMessage" 
+                  placeholder="Type a message..." 
+                  rows="1"
+                  class="w-full p-3 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-200 resize-none"
+                  ></textarea>
+        <button *ngIf="newMessage" 
+                (click)="clearText()"
+                class="absolute right-10 top-3 text-gray-400 hover:text-gray-600">
+          <mat-icon class="!text-sm">close</mat-icon>
+        </button>
+      </div>
+      
+      <!-- Send Button -->
+      <button mat-fab extended 
+              (click)="sendMessage()"
+              [disabled]="!newMessage && !mediaPreview"
+              class="ml-2 !h-10 !w-10 !bg-blue-600 hover:!bg-blue-700 disabled:!bg-gray-300">
+        <mat-icon *ngIf="!newMessage && !mediaPreview" class="!text-gray-500">mood</mat-icon>
+        <mat-icon *ngIf="newMessage || mediaPreview" class="!text-white">send</mat-icon>
       </button>
     </div>
   </div>

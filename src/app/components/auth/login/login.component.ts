@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {ApiService} from '../../../services/api.service';
 import { Router, RouterLink } from '@angular/router';
 import { FlashMessageComponent } from "../../flash-message/flash-message.component";
@@ -10,7 +10,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone:true,
-  imports: [FormsModule]
+  imports: [FormsModule],
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
 
@@ -50,6 +51,9 @@ export class LoginComponent implements OnInit {
         
       );
       }
+    }
+    closeModal() {
+      this.dialogRef.close();
     }
 
 }

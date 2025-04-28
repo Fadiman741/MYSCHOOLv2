@@ -1,46 +1,113 @@
-<!-- Breadcrumb -->
-<!-- <app-pagetiltle title="ANNOUNCEMENTS" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle> -->
-
-<div class="p-4">
-  <!-- Search Bar -->
-  <div class="mb-4">
-    <input
-      [(ngModel)]="searchQuery"
-      (input)="searchChats()"
-      type="text"
-      placeholder="Search chats..."
-      class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-    />
-    <button
-      *ngIf="searchQuery"
-      (click)="clearSearch()"
-      class="mt-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
-    >
-      Clear
-    </button>
+<div class="p-4 max-w-4xl mx-auto">
+  <!-- Search Bar with Improved Styling -->
+  <div class="mb-6 relative">
+    <div class="relative flex items-center">
+      <mat-icon class="absolute left-3 text-gray-400">search</mat-icon>
+      <input
+        [(ngModel)]="searchQuery"
+        (input)="searchChats()"
+        type="text"
+        placeholder="Search conversations..."
+        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+      />
+      <button
+        *ngIf="searchQuery"
+        (click)="clearSearch()"
+        class="absolute right-3 text-gray-400 hover:text-gray-600 transition-colors"
+        mat-icon-button
+        aria-label="Clear search"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </div>
 
-  <!-- Recent Chats List -->
-  <h2 class="text-lg font-semibold mb-4">Recent Chats</h2>
-  <ul>
-    <li *ngFor="let chat of filteredChats" class="mb-4 p-2 hover:bg-gray-100 rounded-lg cursor-pointer">
-      <div class="flex items-center justify-between">
-        <div class="flex-1">
-          <p class="font-medium">{{ chat.name }}</p>
-          <p class="text-sm text-gray-500">{{ chat.lastMessage }}</p>
+  <!-- Recent Chats List with Enhanced UI -->
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="py-4 border-b border-gray-100">
+      <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+        <mat-icon class="text-blue-500">forum</mat-icon>
+        Recent Conversations
+        <span class="text-sm font-normal text-gray-500 ml-2">
+          ({{ filteredChats.length }})
+        </span>
+      </h2>
+    </div>
+
+    <ul class="divide-y divide-gray-100">
+      <li 
+        *ngFor="let chat of filteredChats" 
+        class="hover:bg-gray-50 transition-colors cursor-pointer"
+      >
+        <div class="flex items-center p-4">
+          <!-- User Avatar -->
+          <div class="relative mr-3">
+            <img 
+              [src]="'https://i.pravatar.cc/150?img=3'" 
+              alt="Profile picture"
+              class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+            >
+            <span  
+                  class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              7
+            </span>
+          </div>
+
+          <!-- Chat Content -->
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-baseline">
+              <p class="font-medium text-gray-900 truncate">
+                {{ chat.name }}
+              </p>
+              <span class="text-xs text-gray-500 ml-2 whitespace-nowrap">
+                {{ chat.timestamp  }}
+              </span>
+            </div>
+            <div class="flex justify-between items-center mt-1">
+              <p class="text-sm text-gray-600 truncate flex items-center">
+                <span  class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                {{ chat.lastMessage || 'No messages yet' }}
+              </p>
+              <div class="flex items-center ml-2">
+                <button 
+                  
+                  
+                  class="text-gray-400 hover:text-blue-500 transition-colors"
+                  mat-icon-button
+                  aria-label="Mark as read"
+                >
+                  <mat-icon class="!text-lg">done_all</mat-icon>
+                </button>
+                <button 
+                  (click)="deleteChat(chat.id); $event.stopPropagation()"
+                  class="text-gray-400 hover:text-red-500 transition-colors"
+                  mat-icon-button
+                  aria-label="Delete conversation"
+                >
+                  <mat-icon class="!text-lg">delete_outline</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flex items-center">
-          <span class="text-sm text-gray-400 mr-4">{{ chat.timestamp }}</span>
-          <!-- <button
-            (click)="deleteChat(chat.id)"
-            class="text-red-500 hover:text-red-700"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-            </svg>
-          </button> -->
-        </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredChats.length === 0" class="p-8 text-center">
+      <mat-icon class="text-gray-300 text-5xl mb-4">forum</mat-icon>
+      <h3 class="text-lg font-medium text-gray-500 mb-1">
+        {{ searchQuery ? 'No matching conversations' : 'No conversations yet' }}
+      </h3>
+      <p class="text-gray-400">
+        {{ searchQuery ? 'Try a different search term' : 'Start a new conversation' }}
+      </p>
+      <button *ngIf="!searchQuery"
+              
+              class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto">
+        <mat-icon>add</mat-icon>
+        New Chat
+      </button>
+    </div>
+  </div>
 </div>

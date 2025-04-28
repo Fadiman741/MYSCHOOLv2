@@ -12,6 +12,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { LastSeenPipe } from "../../pipes/lastSeen/lastSeen.pipe";
 import { MatIconModule } from '@angular/material/icon';
 import { TimelineComponent } from "../timeline/timeline.component";
+import { MediaviwerComponent } from '../cards/mediaviwer/mediaviwer.component';
 
 
 @Component({
@@ -38,8 +39,8 @@ export class DiscusionForumComponent implements OnInit {
   grade: any;
   subject: any;newgrade: any;
   newsubject: any;
-;
-  id: any;;
+  id: any;
+  isLoading = false;
 
   currentUser: any;
 
@@ -98,20 +99,22 @@ export class DiscusionForumComponent implements OnInit {
   // ---------------------------------------------------------
 
   loadPosts(): void {
-  this.apiservice.getPosts(this.view.gradeId, this.view.subjectId, this.view.grade, this.view.subject).subscribe(posts => {
-    this.posts = posts;
-    // Iterate through each post and fetch comments
-    this.posts.forEach((post: any) => {
-      this.apiservice.getCommentsByPost(post.id).subscribe((comments: any) => {
-        post.commentCount = comments.length; // Store the comment count in each post
-      }, error => {
-        console.error('Error fetching comments:', error);
-        post.commentCount = 0; // Set to 0 if there is an error fetching comments
+    this.isLoading = true;
+    this.apiservice.getPosts(this.view.gradeId, this.view.subjectId, this.view.grade, this.view.subject).subscribe(posts => {
+      this.posts = posts;
+      this.isLoading = false;
+      // Iterate through each post and fetch comments
+      this.posts.forEach((post: any) => {
+        this.apiservice.getCommentsByPost(post.id).subscribe((comments: any) => {
+          post.commentCount = comments.length; // Store the comment count in each post
+        }, error => {
+          console.error('Error fetching comments:', error);
+          post.commentCount = 0; // Set to 0 if there is an error fetching comments
+        });
       });
-    });
 
-  });
-}
+    });
+  }
   getPosts = () => {
     this.apiservice.getAllPosts().subscribe(
       (data) => {
@@ -272,6 +275,44 @@ export class DiscusionForumComponent implements OnInit {
   isVideo(url: string): boolean {
     return /\.(mp4|webm|ogg)$/i.test(url);
   }
+  // In your component class
+openMediaViewer(mediaUrl: string) {
+  // Check if media is image or video
+  const isImage = this.isImageFile(mediaUrl);
+  const isVideo = this.isVideoFile(mediaUrl);
+
+  // Create modal data
+  const modalData = {
+    mediaUrl: mediaUrl,
+    type: isImage ? 'image' : isVideo ? 'video' : 'unknown'
+  };
+
+  // Open modal dialog
+  const dialogRef = this.dialog.open(MediaviwerComponent, {
+    width: '90vw',
+    maxWidth: '800px',
+    panelClass: 'media-viewer-dialog',
+    data: modalData
+  });
+
+  // Handle modal close
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('Media viewer closed');
+  });
+}
+
+// Helper function to check file type
+private isImageFile(url: string): boolean {
+  if (!url) return false;
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+  return imageExtensions.some(ext => url.toLowerCase().endsWith(ext));
+}
+
+private isVideoFile(url: string): boolean {
+  if (!url) return false;
+  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+  return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
+}
 }
 
 

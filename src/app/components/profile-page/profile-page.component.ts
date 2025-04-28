@@ -1,54 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service';
-import { PagetiltleComponent } from "../pagetiltle/pagetiltle.component";
-import { NgFor } from '@angular/common';
-import { TimelineComponent } from "../timeline/timeline.component";
-// import { ApiService } from 'src/app/services/api.service';
+  import { Component, OnInit } from '@angular/core';
+  import { ApiService } from '../../services/api.service';
+  import { PagetiltleComponent } from "../pagetiltle/pagetiltle.component";
+  import { NgFor } from '@angular/common';
+  import { TimelineComponent } from "../timeline/timeline.component";
+  import { ActivatedRoute } from '@angular/router';
+  // import { ApiService } from 'src/app/services/api.service';
 
 
-@Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.css'],
-  imports: [PagetiltleComponent, NgFor, TimelineComponent],
-  standalone:true,
-})
-export class ProfilePageComponent implements OnInit {
+  @Component({
+    selector: 'app-profile-page',
+    templateUrl: './profile-page.component.html',
+    styleUrls: ['./profile-page.component.css'],
+    imports: [PagetiltleComponent, NgFor, TimelineComponent],
+    standalone:true,
+  })
+  export class ProfilePageComponent implements OnInit {
+    
+    breadCrumbItems: Array<{}> = [];
+    currentUser: any;
+    user: any;
+    
+    constructor(private apiservice: ApiService,private route: ActivatedRoute) { 
+    
+    }
 
-  fullName = 'Your Name';
-  bio = 'Write a short bio here.';
-  email = 'your.email@example.com';
-  phone = '123-456-7890';
-  location = 'Your City, Country';
-  subjects = ['Subject 1', 'Subject 2', 'Subject 3'];
-  
-  breadCrumbItems: Array<{}> = [];
-  currentUser: any;
-  
-  constructor(private apiservice: ApiService) { }
-
-  ngOnInit() {
-     this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profile', active: true }];
-    this.apiservice.getCurrentUser().subscribe(
-      response => {
-        this.currentUser = response;
-        console.log(this.currentUser)
-      },
-      error => {
-        console.error('Error:', error);
-      }
-    );
-
+    ngOnInit() {
+      this.breadCrumbItems = [{ label: 'Home' }, { label: 'Profile', active: true }];
+      var userId = this.route.snapshot.params['id'];
+      console.log(userId);
+      this.apiservice.getUser(userId).subscribe(
+        (response) => {
+          this.user = response;
+          console.log(this.user);
+        },
+        (error) => {}
+      );
+    }
   }
-  getLoggedInUser() {
-    this.apiservice.getLoggedInUserDetails().subscribe(
-      (response) => {
-        this.currentUser = response;
-        console.log(this.currentUser);
-      },
-      (error) => {}
-    );
-
-  }
-
-}

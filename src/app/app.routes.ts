@@ -18,6 +18,8 @@ import { AuthTemplateComponent } from './components/auth/auth-template/auth-temp
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { BannerComponent } from './components/cards/banner/banner.component';
+import { GroupsComponent } from './components/groups/groups.component';
+import { GroupViewComponent } from './components/groups-view/groups-view.component';
 
 
 export const routes: Routes = [
@@ -36,9 +38,11 @@ export const routes: Routes = [
         { path: 'annoucement/:id', component:ViewAnnouncementComponent},
         { path: 'posts/:gradeId/:subjectId/:grade/:subject', component: DiscusionForumComponent },
         { path: 'view-post/:id', component: ViewPostComponent },
-        { path: 'profile', component: ProfilePageComponent },
+        { path: 'user-profile/:id', component: ProfilePageComponent },
         { path: 'ChatMate' , component:AichatComponent},
         { path: 'inbox' , component:InboxComponent},
+        { path: 'groups' , component:GroupsComponent},
+        { path: 'group-view/:id' , component:GroupViewComponent},
 
 
 

@@ -12,6 +12,9 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { LastSeenPipe } from "../../pipes/lastSeen/lastSeen.pipe";
 import { CreateAnnoucementComponent } from '../modals/create-annoucement/create-annoucement.component';
 import { TimelineComponent } from "../timeline/timeline.component";
+import { MatIcon } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { Meta, Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -19,7 +22,7 @@ import { TimelineComponent } from "../timeline/timeline.component";
   templateUrl: './announcements.component.html',
   styleUrls: ['./announcements.component.css'],
   standalone:true,
-  imports: [PagetiltleComponent, NgClass, LastSeenPipe, NgFor, NgIf, TimelineComponent],
+  imports: [PagetiltleComponent, NgClass, LastSeenPipe, NgFor, NgIf, TimelineComponent,MatIcon,MatMenuModule],
 })
 export class AnnouncementsComponent implements OnInit {
 
@@ -27,15 +30,16 @@ export class AnnouncementsComponent implements OnInit {
   public view: any = {
     
   }
-
+  isAdmin = true;
   breadCrumbItems: Array<{}> = [];
   isReadMore: true = true;
   announcements: any;
+  isLoading = false;
 
   showReplies = false;
   showDropdown = false;
 
-  constructor(public dialog: MatDialog,private apiservice: ApiService,private router:Router,private ModalServiceService:ModalServiceService) { }
+  constructor(public dialog: MatDialog,private apiservice: ApiService,private router:Router,private ModalServiceService:ModalServiceService,private meta: Meta, private title: Title) { }
   @ViewChild('announcementForm') signupForm!: any;
 
   isCollapsed = true; // Start with collapsed state
@@ -45,17 +49,29 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Announcement', active: true }];
+    this.breadCrumbItems = [{ label: 'Home' }, { label: 'Articles', active: true }];
     this.getAnnouncements();
       this.apiservice.getCurrentUser().subscribe(
         response => {
           this.view.currentUser = response;
-          console.log(this.view.currentUser)
+          // console.log(this.view.currentUser)
         },
         error => {
           console.error('Error:', error);
         }
     );
+
+    this.title.setTitle('Community Forum & Anrticles - Stay Updated');
+    
+    this.meta.addTags([
+      { name: 'description', content: 'Join our community forum to stay updated with the latest airticles, news, and discussions. Connect with other members and share your thoughts.' },
+      { name: 'keywords', content: 'community forum, announcements, news, discussions, updates' },
+      { name: 'og:title', content: 'Community Forum & Announcements' },
+      { name: 'og:description', content: 'Stay updated with the latest news and join discussions in our community forum.' },
+      { name: 'og:image', content: 'https://www.shutterstock.com/image-photo/online-digital-e-invoice-statements-260nw-1754977274.jpg' },
+      { name: 'og:url', content: 'https://yourdomain.com/announcements' },
+      { name: 'twitter:card', content: 'summary_large_image' }
+    ]);
   }
 
   showText() {
@@ -63,10 +79,12 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   getAnnouncements = () => {
+    this.isLoading = true;
     this.apiservice.getAllAnnouncements().subscribe(
       data => {
         this.announcements = data;
-        console.log(this.announcements);
+        this.isLoading = false;
+        // console.log(this.announcements);
       },
       error => {
         console.log(error);

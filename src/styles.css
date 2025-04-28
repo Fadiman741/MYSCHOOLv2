@@ -11,10 +11,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     @apply w-full max-w-4xl bg-white shadow-lg rounded-xl !important;
 }
 ::ng-deep .custom-dialog .mat-mdc-dialog-panel {
-  max-width: 36rem; /* Equivalent to Tailwind's max-w-4xl */
+   /* max-width: 36rem;Equivalent to Tailwind's max-w-4xl */
   width: 100%;
 }
-app-login{
+app-login .custom-dialog .mat-mdc-dialog-panel{
   @apply max-w-xl ;
 }
 

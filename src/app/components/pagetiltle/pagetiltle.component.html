@@ -4,12 +4,13 @@
       <div class="flex items-center">
         <!-- Title can be uncommented if needed -->
         <!-- <h5 class="text-[#141C3C]"> {{ title }} </h5> -->
+        
 
         <div class="relative">
           <a (click)="viewInbox()" class="relative inline-block px-[3px] pr-[50px]">
             <fa-icon [icon]="faEnvelope" class="text-white/80 text-[25px]"></fa-icon>
             <span
-              class="absolute bg-[#141C3C] text-white rounded-[20%] px-[2px] text-[9px] -ml-[7px] mt-[1px]"
+              class="absolute bg-green-600 text-white rounded-[20%] px-[5px] text-[9px] -ml-[7px] -mt-[5px]"
               >10</span
             >
           </a>
@@ -19,12 +20,19 @@
           <a (click)="viewNotifications()" class="relative inline-block px-[3px] pr-[50px]">
             <fa-icon [icon]="faBell" class="text-white/80 text-[25px]"></fa-icon>
             <span
-              class="absolute bg-[#141C3C] text-white rounded-[20%] px-[2px] text-[9px] -ml-[7px] mt-[1px]"
+              class="absolute bg-green-600 text-white rounded-[20%] px-[7px] text-[9px] -ml-[7px] -mt-[5px]"
               >{{ count }}</span
             >
           </a>
         </div>
+        <div class="relative">
+          <a (click)="viewGroups()" class="relative inline-block px-[3px] pr-[50px]">
+            <fa-icon [icon]="faUsers" class="text-white/80 text-[20px]"></fa-icon>
+            <span class="absolute bg-green-600 text-white rounded-[20%] px-[7px] text-[9px] -ml-[7px] -mt-[5px]">{{ count }}</span>
+          </a>
+        </div>
       </div>
+      
 
       <nav class="pt-[8px] hidden sm:block" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">

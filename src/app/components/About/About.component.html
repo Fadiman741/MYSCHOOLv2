@@ -1,342 +1,577 @@
 <app-pagetiltle title="ABOUT" [breadcrumbItems]="breadCrumbItems"></app-pagetiltle>
-<section [ngStyle]="backgroundStyle">
-  <div class="container mx-auto py-8">
-    <div class="flex flex-wrap items-center py-8">
-      <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
+<section [ngStyle]="backgroundStyle" class="relative overflow-hidden">
+  <!-- Gradient background overlay -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[#121a36]-900/90 to-purple-900/90 z-0"></div>
+
+  <div class="container mx-auto py-16 lg:py-24 px-4 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-12">
+      <!-- Text Content -->
+      <div class="w-full lg:w-1/2 xl:w-5/12 space-y-6">
         <div
-          class="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white"
-        >
-          <i class="fas fa-user-friends text-xl"></i>
+          class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
         </div>
-        <h3 class="text-3xl mb-2 font-semibold leading-normal text-white">
-          Empowering Education Through Innovation
-        </h3>
-        <p
-          class="text-lg font-normal leading-relaxed mt-4 mb-4 text-gray-300"
-        >
-        Our platform is designed to bridge the gap between institutions, students, and tutors, creating a seamless and collaborative learning environment. By leveraging cutting-edge technology, we aim to enhance communication, foster academic growth, and provide personalized support for every learner.
+
+        <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">
+          Empowering Education <br> Through <span class="text-green-300">Innovation</span>
+        </h2>
+
+        <p class="text-lg md:text-xl text-gray-200 leading-relaxed">
+          Our platform bridges the gap between institutions, students, and tutors, creating a seamless and collaborative
+          learning environment.
         </p>
-        <!-- <p
-          class="text-lg font-normal leading-relaxed mt-0 mb-4 text-blueGray-600"
-        >
-          The kit comes with three pre-built pages to help you get started
-          faster. You can change the text and images and you're good to go.
-          Just make sure you enable them first via JavaScript.
-        </p> -->
+
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-300" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p class="text-gray-200">
+              Leveraging cutting-edge technology to enhance communication
+            </p>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-300" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p class="text-gray-200">
+              Fostering academic growth through personalized support
+            </p>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-300" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p class="text-gray-200">
+              Creating accessible learning experiences for all
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 pt-4">
+          <button
+            class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-all shadow-lg hover:shadow-xl">
+            Learn More
+          </button>
+          <button
+            class="px-6 py-3 bg-transparent border-2 border-white/30 hover:border-white/50 text-white font-medium rounded-lg transition-all">
+            Contact Us
+          </button>
+        </div>
       </div>
 
-      <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
+      <!-- Card Content -->
+      <div class="w-full lg:w-1/2 xl:w-5/12">
         <div
-          class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-[#121a36]"
-        >
-          <img
-            alt="..."
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
-            class="w-full align-middle rounded-t-lg"
-          />
-          <div class="relative bg-[#121a36] p-8 ">
-            <svg
-              preserveAspectRatio="none"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 583 95"
-              class="absolute left-0 w-full h-64 -top-64"
-            >
-              <polygon
-                points="-30,95 583,95 583,65"
-                class="text-[#121a36] fill-current"
-              ></polygon>
-            </svg>
-            <h4 class="text-xl font-bold text-white">Tailored Learning Experiences</h4>
-            <p class="text-lg font-normal mt-2 text-gray-400">
-              We understand that every learner is unique. Our platform offers customizable tools and resources to meet individual needs, ensuring an inclusive and effective learning journey.
+          class="relative group overflow-hidden rounded-2xl shadow-2xl transform transition-all duration-500 hover:-translate-y-2">
+          <img alt="Students collaborating"
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80"
+            class="w-full h-full object-cover aspect-video" />
+
+          <div class="absolute inset-0 bg-gradient-to-t from-[#121a36] to-transparent"></div>
+
+          <div class="relative bg-[#121a36] p-8 space-y-4">
+            <div class="absolute -top-10 left-0 w-full h-10">
+              <svg viewBox="0 0 100 10" class="w-full h-full">
+                <path d="M0,10 Q50,0 100,10" fill="#121a36" />
+              </svg>
+            </div>
+
+            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-300" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              Tailored Learning Experiences
+            </h3>
+
+            <p class="text-gray-300 leading-relaxed">
+              We understand that every learner is unique. Our platform offers customizable tools and resources to meet
+              individual needs, ensuring an inclusive and effective learning journey.
             </p>
+
+            <div class="pt-2">
+              <button class="text-green-300 hover:text-green-200 font-medium flex items-center gap-1 transition-colors">
+                Explore features
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative elements -->
+  <div class="absolute -bottom-20 -right-20 w-64 h-64 rounded-full bg-green-500/10 blur-3xl z-0"></div>
+  <div class="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-purple-500/10 blur-3xl z-0"></div>
+</section>
+<section class="py-20 relative bg-gradient-to-b from-[#121a36] to-[#0d1327] overflow-hidden">
+  <!-- Decorative elements -->
+  <div class="absolute top-0 left-0 w-full h-full opacity-10">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-green-500 blur-[100px]"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-purple-500 blur-[100px]"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative z-10">
+    <!-- Mission Statement -->
+    <div class="max-w-4xl mx-auto text-center mb-16">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+        Our <span class="text-green-300">Mission</span>
+      </h2>
+      <p class="text-xl text-gray-300 leading-relaxed">
+        Revolutionizing education through a centralized platform that connects institutions, students, and tutors. We're
+        committed to fostering collaboration, enhancing communication, and empowering learners to achieve their full
+        potential.
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div
+        class="group bg-gradient-to-b from-white/5 to-white/10 rounded-2xl p-8 backdrop-blur-sm border border-white/10 hover:border-green-400/30 transition-all duration-300 hover:-translate-y-2 shadow-lg">
+        <div
+          class="w-14 h-14 rounded-full bg-green-500/10 border border-green-400/30 flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-300" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Secure & Scalable</h3>
+        <p class="text-gray-300">
+          Built with Angular, Django, and MySQL, our platform ensures enterprise-grade security and effortless
+          scalability to grow with your needs.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div
+        class="group bg-gradient-to-b from-white/5 to-white/10 rounded-2xl p-8 backdrop-blur-sm border border-white/10 hover:border-purple-400/30 transition-all duration-300 hover:-translate-y-2 shadow-lg">
+        <div
+          class="w-14 h-14 rounded-full bg-purple-500/10 border border-purple-400/30 flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-300" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Seamless Communication</h3>
+        <p class="text-gray-300">
+          Real-time announcements, forums, and messaging create a dynamic learning community where knowledge flows
+          effortlessly.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div
+        class="group bg-gradient-to-b from-white/5 to-white/10 rounded-2xl p-8 backdrop-blur-sm border border-white/10 hover:border-teal-400/30 transition-all duration-300 hover:-translate-y-2 shadow-lg">
+        <div
+          class="w-14 h-14 rounded-full bg-teal-500/10 border border-teal-400/30 flex items-center justify-center mb-6 group-hover:bg-teal-500/20 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-300" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Tutor Matching</h3>
+        <p class="text-gray-300">
+          Our intelligent matching system connects students with ideal tutors based on learning style, subject
+          expertise, and personality.
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-16">
+      <button
+        class="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-full transition-all shadow-lg hover:shadow-xl hover:from-green-600 hover:to-green-700">
+        Join Our Learning Community
+      </button>
+    </div>
+  </div>
+</section>
+<section class="bg-gradient-to-b from-white to-gray-50 py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+      <!-- Image Column -->
+      <div class="w-full lg:w-1/2 relative">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+          <img src="assets/backgrounds/6.png" alt="Students collaborating on our platform"
+            class="w-full h-auto object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#121a36]/30 to-transparent"></div>
+        </div>
+
+        <!-- Decorative element -->
+        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-500/10 rounded-full blur-xl z-0"></div>
+      </div>
+
+      <!-- Text Column -->
+      <div class="w-full lg:w-1/2 lg:pl-8">
+        <div class="max-w-lg">
+          <span class="text-sm font-semibold tracking-wider text-green-600 uppercase">
+            Transforming Education
+          </span>
+          <h2 class="mt-4 text-4xl font-bold text-gray-900 sm:text-5xl">
+            Welcome to Our <span class="text-[#121a36]">Platform</span>
+          </h2>
+
+          <div class="mt-8 relative pl-6 border-l-4 border-[#121a36]">
+            <p class="text-lg text-gray-600 leading-relaxed">
+              Whether you're a student seeking academic support, an institution looking to streamline communication, or
+              a tutor aiming to share your expertise, our platform is designed to meet your needs. Join us in
+              transforming education for the better.
+            </p>
+          </div>
+
+          <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <span class="text-sm font-medium text-gray-700">Students</span>
+            </div>
+
+            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <span class="text-sm font-medium text-gray-700">Institutions</span>
+            </div>
+
+            <div class="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border border-gray-100">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <span class="text-sm font-medium text-gray-700">Tutors</span>
+            </div>
+          </div>
+
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="#"
+              class="px-6 py-3 bg-[#121a36] text-white font-medium rounded-lg hover:bg-[#0d1327] transition-colors shadow-md">
+              Get Started
+            </a>
+            <a href="#"
+              class="px-6 py-3 bg-white text-[#121a36] font-medium rounded-lg hover:bg-gray-50 transition-colors shadow-md border border-gray-200">
+              Learn More
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<section class="pb-6 relative block bg-[#121a36]">
-  <!-- <div
-    class="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
-    style="transform: translateZ(0)"
-  >
-    <svg
-      class="absolute bottom-0 overflow-hidden"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="none"
-      version="1.1"
-      viewBox="0 0 2560 100"
-      x="0"
-      y="0"
-    >
-      <polygon
-        class="text-[#121a36] fill-current"
-        points="2560 0 2560 100 0 100"
-      ></polygon>
-    </svg>
-  </div> -->
-
-  <div class="container mx-auto px-4 lg:pt-24 lg:pb-32">
-    <div class="flex flex-wrap text-center justify-center">
-      <div class="w-full lg:w-6/12 px-4">
-        <h2 class="text-4xl font-semibold text-white">Our Mission</h2>
-        <p class="text-lg font-normal leading-relaxed mt-4 mb-4 text-gray-400">
-          We are committed to revolutionizing education by providing a centralized platform that connects institutions, students, and tutors. Our goal is to foster collaboration, enhance communication, and empower learners to achieve their full potential.
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-wrap mt-12 justify-center">
-      <div class="w-full lg:w-3/12 px-4 text-center">
-        <div
-          class="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center"
-        >
-          <i class="fas fa-medal text-xl"></i>
-        </div>
-        <h6 class="text-xl mt-5 font-semibold text-white">
-          Secure & Scalable
-        </h6>
-        <p class="text-lg font-normal mt-2 mb-4 text-gray-400">
-          Built with robust technologies like Angular, Django, and MySQL, our platform ensures security, scalability, and efficiency.
-        </p>
-      </div>
-      <div class="w-full lg:w-3/12 px-4 text-center">
-        <div
-          class="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center"
-        >
-          <i class="fas fa-poll text-xl"></i>
-        </div>
-        <h5 class="text-xl mt-5 font-semibold text-white">
-          Seamless Communication
-        </h5>
-        <p class="text-lg font-normal mt-2 mb-4 text-gray-400">
-          Our announcement system and forums enable real-time updates and academic discussions, fostering a collaborative learning environment.
-        </p>
-      </div>
-      <div class="w-full lg:w-3/12 px-4 text-center">
-        <div
-          class="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center"
-        >
-          <i class="fas fa-lightbulb text-xl"></i>
-        </div>
-        <h5 class="text-xl mt-5 font-semibold text-white">Tutor Finder</h5>
-        <p class="text-lg font-normal mt-2 mb-4 text-gray-400">
-          Our Tutor Finder feature connects students with the right mentors, offering personalized academic support and guidance.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-<section>
-  <div class="max-w-[1100px] mx-auto py-16">
-    <div class="flex justify-between flex-col md:flex-row">
-      <div class="w-full md:w-1/2 p-16">
-        <img src="assets/backgrounds/6.png" class="w-full" />
-      </div>
-      <div class="w-full md:w-1/2 p-16">
-        <h3 class="pt-5 uppercase text-[#121a36] text-2xl font-bold text-left">
-          Welcome to Our Platform!
-        </h3>
-        <p class="mt-5 p-5 max-w-[450px] text-left text-[#121a36] text-lg font-normal leading-relaxed border-l-[5px] border-[#121a36]">
-          Whether you're a student seeking academic support, an institution looking to streamline communication, or a tutor aiming to share your expertise, our platform is designed to meet your needs. Join us in transforming education for the better.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="bg-[#121a36] py-10">
-  <div class="max-w-[1250px] mx-auto px-5">
+<section class="bg-gradient-to-b from-[#121a36] to-[#0d1327] py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Welcome Card -->
-    <div class="rounded-lg shadow-lg text-center bg-white p-8 ">
-      <h1 class="text-3xl font-bold text-[#121a36]">Join Our Learning Community!</h1>
+    <div
+      class="relative bg-white rounded-xl shadow-2xl p-8 md:p-10 text-center max-w-4xl mx-auto -mt-5 transform transition-all hover:-translate-y-1 hover:shadow-2xl">
+      <div
+        class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-green-600 rounded-full flex items-center justify-center shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-[#121a36] mb-4">
+        Join Our <span class="text-green-600">Learning Community</span>!
+      </h1>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Become part of an innovative educational ecosystem connecting students, institutions, and tutors worldwide.
+      </p>
     </div>
 
-    <!-- Row of White Cards -->
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Features Grid -->
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Card 1 -->
-      <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-        <div class="inline-block bg-[#1e2a4a] p-4 rounded-full">
-          <fa-icon [icon]="faUsers" class="text-2xl text-white"></fa-icon>
+      <div
+        class="group relative bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div class="absolute top-0 left-0 w-full h-1 bg-green-600"></div>
+        <div class="p-8 text-center">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#1e2a4a] text-white mb-6 transition-all group-hover:bg-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#121a36] mb-3">Collaborative Network</h3>
+          <p class="text-gray-600">
+            Our platform connects students, institutions, and tutors in a vibrant ecosystem fostering collaboration and
+            academic excellence.
+          </p>
         </div>
-        <p class="mt-5 text-lg font-normal text-gray-700">
-          Our platform connects students, institutions, and tutors, fostering collaboration and academic excellence.
-        </p>
       </div>
 
       <!-- Card 2 -->
-      <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-        <div class="inline-block bg-[#1e2a4a] p-4 rounded-full">
-          <fa-icon [icon]="faAddressCard" class="text-2xl text-white"></fa-icon>
+      <div
+        class="group relative bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div class="absolute top-0 left-0 w-full h-1 bg-green-600"></div>
+        <div class="p-8 text-center">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#1e2a4a] text-white mb-6 transition-all group-hover:bg-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#121a36] mb-3">Secure Access</h3>
+          <p class="text-gray-600">
+            Role-based authentication ensures secure and personalized experiences tailored to each user's needs and
+            permissions.
+          </p>
         </div>
-        <p class="mt-5 text-lg text-gray-700">
-          Role-based access ensures secure and tailored experiences for all users
-        </p>
       </div>
 
       <!-- Card 3 -->
-      <div class="bg-white p-8 rounded-lg shadow-lg text-center">
-        <div class="inline-block bg-[#1e2a4a] p-4 rounded-full">
-          <fa-icon [icon]="faBook" class="text-2xl text-white"></fa-icon>
-        </div>
-        <p class="mt-5 text-lg text-gray-700">
-          Explore our forums, announcements, and Tutor Finder to enhance your learning journey.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="pt-20 pb-32">
-  <div class="container mx-auto px-4">
-    <div class="flex flex-wrap justify-center text-center mb-24">
-      <div class="w-full lg:w-6/12 px-4">
-        <h2 class="text-4xl font-semibold text-[#121a36]">Meet Our Team</h2>
-        <p class="text-lg font-normal leading-relaxed m-4 text-[#121a36]">
-          Our dedicated team of developers, designers, and educators is committed to creating a platform that transforms the way we learn and teach.
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-wrap">
-      <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-        <div class="px-6">
-          <img
-            alt="..."
-            src="https://st2.depositphotos.com/1715570/5634/i/450/depositphotos_56347297-stock-photo-beautiful-young-black-woman-smiling.jpg"
-            class="shadow-lg rounded-full mx-auto w-[120px] h-[120px]"
-          />
-          <div class="pt-6 text-center">
-            <h5 class="text-xl font-bold text-[#121a36]">Ryan Tompson</h5>
-            <p class="mt-1 text-md text-[#121a36] uppercase font-normal">
-              Web Developer
-            </p>
-            <div class="mt-6">
-              <button
-                class="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-twitter"></i>
-              </button>
-              <button
-                class="bg-lightBlue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-facebook-f"></i>
-              </button>
-              <button
-                class="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-dribbble"></i>
-              </button>
-            </div>
+      <div
+        class="group relative bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div class="absolute top-0 left-0 w-full h-1 bg-green-600"></div>
+        <div class="p-8 text-center">
+          <div
+            class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#1e2a4a] text-white mb-6 transition-all group-hover:bg-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
           </div>
-        </div>
-      </div>
-      <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-        <div class="px-6">
-          <img
-            alt="..."
-            src="https://st2.depositphotos.com/1715570/5634/i/450/depositphotos_56347297-stock-photo-beautiful-young-black-woman-smiling.jpg"
-            class="shadow-lg rounded-full mx-auto w-[120px] h-[120px]"
-          />
-          <div class="pt-6 text-center">
-            <h5 class="text-xl font-bold text-[#121a36]">Romina Hadid</h5>
-            <p class="mt-1 text-md text-[#121a36] uppercase font-normal">
-              Marketing Specialist
-            </p>
-            <div class="mt-6">
-              <button
-                class="bg-[#121a36] text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-google"></i>
-              </button>
-              <button
-                class="bg-lightBlue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-facebook-f"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-        <div class="px-6">
-          <img
-            alt="..."
-            src="https://st2.depositphotos.com/1715570/5634/i/450/depositphotos_56347297-stock-photo-beautiful-young-black-woman-smiling.jpg"
-            class="shadow-lg rounded-full mx-auto w-[120px] h-[120px]"
-          />
-          <div class="pt-6 text-center">
-            <h5 class="text-xl font-bold text-[#121a36]">Alexa Smith</h5>
-            <p class="mt-1 text-md text-[#121a36] uppercase font-normal">
-              UI/UX Designer
-            </p>
-            <div class="mt-6">
-              <button
-                class="bg-[#121a36] text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-google"></i>
-              </button>
-              <button
-                class="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-twitter"></i>
-              </button>
-              <button
-                class="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-instagram"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="w-full md:w-6/12 lg:w-3/12 lg:mb-0 mb-12 px-4">
-        <div class="px-6">
-          <img
-            alt="..."
-            src="https://st2.depositphotos.com/1715570/5634/i/450/depositphotos_56347297-stock-photo-beautiful-young-black-woman-smiling.jpg"
-            class="shadow-lg rounded-full mx-auto w-[120px] h-[120px]"
-          />
-          <div class="pt-6 text-center">
-            <h5 class="text-xl font-bold text-[#121a36]">Jenna Kardi</h5>
-            <p class="mt-1 text-md text-[#121a36] uppercase font-normal">
-              Founder and CEO
-            </p>
-            <div class="mt-6 flex flex-row justify-center">
-              <button
-                class="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-dribbble"></i>
-              </button>
-              <button
-                class="bg-[#121a36] text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-google"></i>
-              </button>
-              <button
-                class="bg-lightBlue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-twitter"></i>
-              </button>
-              <button
-                class="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
-                type="button"
-              >
-                <i class="fab fa-instagram"></i>
-              </button>
-            </div>
-          </div>
+          <h3 class="text-xl font-bold text-[#121a36] mb-3">Learning Tools</h3>
+          <p class="text-gray-600">
+            Access forums, announcements, and our Tutor Finder to enhance your educational journey with comprehensive
+            resources.
+          </p>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
+    <!-- CTA -->
+    <div class="mt-16 text-center">
+      <button
+        class="px-8 py-3 bg-gradient-to-r from-green-600 to-[#1e2a4a] text-white font-medium rounded-full transition-all shadow-lg hover:shadow-xl hover:from-[#1e2a4a] hover:to-green-600">
+        Join Now - It's Free
+      </button>
+    </div>
+  </div>
+</section>
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+  <div class="container mx-auto px-4">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-sm font-semibold tracking-wider text-green-600 uppercase">
+        Our Creative Team
+      </span>
+      <h2 class="mt-4 text-4xl font-bold text-[#121a36]">
+        Meet <span class="text-green-600">The Minds</span> Behind Our Platform
+      </h2>
+      <p class="mt-4 text-lg text-gray-600 leading-relaxed">
+        Our dedicated team of developers, designers, and educators is committed to transforming the way we learn and
+        teach through innovative technology.
+      </p>
+    </div>
+
+    <!-- Team Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Team Member 1 -->
+      <div
+        class="group relative bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+        <div class="relative overflow-hidden h-64">
+          <img
+            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            alt="Ryan Tompson - Web Developer"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#121a36]/70 to-transparent"></div>
+        </div>
+        <div class="p-6 text-center">
+          <h3 class="text-xl font-bold text-[#121a36]">Ryan Tompson</h3>
+          <p class="text-green-600 font-medium">Web Developer</p>
+          <p class="mt-3 text-gray-600 text-sm">
+            Full-stack developer specializing in Angular and Django applications.
+          </p>
+          <div class="mt-5 flex justify-center space-x-3">
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 2 -->
+      <div
+        class="group relative bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+        <div class="relative overflow-hidden h-64">
+          <img
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            alt="Romina Hadid - Marketing Specialist"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#121a36]/70 to-transparent"></div>
+        </div>
+        <div class="p-6 text-center">
+          <h3 class="text-xl font-bold text-[#121a36]">Romina Hadid</h3>
+          <p class="text-green-600 font-medium">Marketing Specialist</p>
+          <p class="mt-3 text-gray-600 text-sm">
+            Digital marketing expert focused on educational technology growth.
+          </p>
+          <div class="mt-5 flex justify-center space-x-3">
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 3 -->
+      <div
+        class="group relative bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+        <div class="relative overflow-hidden h-64">
+          <img
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            alt="Alexa Smith - UI/UX Designer"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#121a36]/70 to-transparent"></div>
+        </div>
+        <div class="p-6 text-center">
+          <h3 class="text-xl font-bold text-[#121a36]">Alexa Smith</h3>
+          <p class="text-green-600 font-medium">UI/UX Designer</p>
+          <p class="mt-3 text-gray-600 text-sm">
+            Creating intuitive and engaging user experiences for education.
+          </p>
+          <div class="mt-5 flex justify-center space-x-3">
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 4 -->
+      <div
+        class="group relative bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+        <div class="relative overflow-hidden h-64">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            alt="Jenna Kardi - Founder and CEO"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#121a36]/70 to-transparent"></div>
+        </div>
+        <div class="p-6 text-center">
+          <h3 class="text-xl font-bold text-[#121a36]">Jenna Kardi</h3>
+          <p class="text-green-600 font-medium">Founder and CEO</p>
+          <p class="mt-3 text-gray-600 text-sm">
+            Visionary leader passionate about educational technology innovation.
+          </p>
+          <div class="mt-5 flex justify-center space-x-3">
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-green-600 transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-16">
+      <button
+        class="px-8 py-3 bg-gradient-to-r from-green-600 to-[#121a36] text-white font-medium rounded-full transition-all shadow-lg hover:shadow-xl hover:from-[#121a36] hover:to-green-600">
+        Join Our Team
+      </button>
+    </div>
+  </div>
+</section>
